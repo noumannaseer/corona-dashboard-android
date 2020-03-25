@@ -3,9 +3,70 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/app_background1</item>
+        <item name="colorPrimaryDark">@color/app_background1</item>
+        <item name="colorAccent">@color/purple_color_background1</item>
+        <!-- themes attr-->
+        <item name="app_background">@color/app_background1</item>
+        <item name="app_foreground">@color/app_background1</item>
+        <item name="background_text_color">@color/background_text_color1</item>
+        <item name="green_color_background">@color/green_color_background1</item>
+        <item name="blue_color_background">@color/blue_color_background1</item>
+        <item name="purple_color_background">@color/purple_color_background1</item>
+        <item name="yellow_color_background">@color/yellow_color_background1</item>
+        <item name="pink_color_background">@color/pink_color_background1</item>
+        <item name="red_color_background">@color/red_color_background1</item>
+        <item name="brown_color_background">@color/brown_color_background1</item>
+        <item name="grey_color_background">@color/grey_color_background1</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="toolbarStyle">@style/toolbarStyleF</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+    <style name="cardview_style" parent="CardView">
+        <item name="cardBackgroundColor">?attr/app_foreground</item>
+        <item name="android:shadowColor">?attr/grey_color_background</item>
+    </style>
+
+    <style name="toolbarStyleF" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">?attr/background_text_color</item>
+        <item name="android:background">?attr/app_background</item>
+    </style>
+
+
+    <style name="CustomTransparentDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="darktheme" parent="Theme.AppCompat.DayNight">
+
+        <item name="colorPrimary">@color/app_background2</item>
+        <item name="colorPrimaryDark">@color/app_background2</item>
+        <item name="colorAccent">@color/purple_color_background2</item>
+
+        <!-- themes attr-->
+        <item name="app_background">@color/app_background2</item>
+        <item name="app_foreground">@color/app_foreground2</item>
+        <item name="background_text_color">@color/background_text_color2</item>
+        <item name="green_color_background">@color/green_color_background2</item>
+        <item name="blue_color_background">@color/blue_color_background1</item>
+        <item name="purple_color_background">@color/purple_color_background2</item>
+        <item name="yellow_color_background">@color/yellow_color_background2</item>
+        <item name="pink_color_background">@color/pink_color_background2</item>
+        <item name="red_color_background">@color/red_color_background2</item>
+        <item name="brown_color_background">@color/brown_color_background2</item>
+        <item name="grey_color_background">@color/grey_color_background2</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="toolbarStyle">@style/toolbarStyleF</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+
     </style>
 
 </resources>

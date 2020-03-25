@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!--Light theme-->
+    <color name="app_background1">#FFFFFF</color>
+    <color name="app_foreground1">#FFFFFF</color>
+    <color name="background_text_color1">#000000</color>
+    <color name="foreground_text_color1">#9CA2A8</color>
+    <!--    <color name="green_color_background1">#1C9036</color>-->
+    <color name="green_color_background1">#3AA852</color>
+
+    <color name="blue_color_background1">#0CA6DC</color>
+    <color name="purple_color_background1">#3F4CAB</color>
+    <color name="yellow_color_background1">#BED535</color>
+    <color name="pink_color_background1">#C5025C</color>
+    <color name="red_color_background1">#E4431F</color>
+    <color name="brown_color_background1">#735245</color>
+    <color name="grey_color_background1">#5C6364</color>
+
+
+    <!--Dark theme-->
+    <color name="app_background2">#202124</color>
+    <color name="app_foreground2">#3C4043</color>
+    <color name="background_text_color2">#FFFFFF</color>
+    <color name="foreground_text_color2">#9CA2A8</color>
+    <color name="green_color_background2">#3AA852</color>
+    <color name="blue_color_background2">#0CA6DC</color>
+    <color name="purple_color_background2">#535EB3</color>
+    <color name="yellow_color_background2">#BBCD4E</color>
+    <color name="pink_color_background2">#C0296E</color>
+    <color name="red_color_background2">#CF5B3F</color>
+    <color name="brown_color_background2">#8E695B</color>
+    <color name="grey_color_background2">#7E8689</color>
+
 </resources>

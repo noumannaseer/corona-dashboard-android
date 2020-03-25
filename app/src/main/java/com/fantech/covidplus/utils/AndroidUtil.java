@@ -1,4 +1,4 @@
-package com.fantech.covidplus.others;
+package com.fantech.covidplus.utils;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

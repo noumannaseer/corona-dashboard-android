@@ -1,6 +1,7 @@
 package com.fantech.covidplus.view_models;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import com.fantech.covidplus.dao.CoronaDAO;
 import com.fantech.covidplus.database.CoronaDatabase;
@@ -29,16 +30,73 @@ public class CoronaStatsViewModel
     }
 
     //****************************************************************
-    public LiveData<List<Corona>> getTasks()
+    public LiveData<List<Corona>> getRecords()
     //****************************************************************
     {
-        return mCoronaDAO.getAllTasks();
+        return mCoronaDAO.getAllRecords();
+    }
+
+    //*********************************************************************
+    public LiveData<List<String>> getCountriesList()
+    //*********************************************************************
+    {
+
+        return mCoronaDAO.getCountries();
     }
 
     //****************************************************************
-    public void insertRow(Corona corona)
+    public void insert(final Corona corona)
     //****************************************************************
     {
-        mCoronaDAO.insertRow(corona);
+        AsyncTask.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mCoronaDAO.insert(corona);
+            }
+        });
     }
+
+
+    //****************************************************************
+    public void insert(final List<Corona> statsList)
+    //****************************************************************
+    {
+        AsyncTask.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mCoronaDAO.insert(statsList);
+            }
+        });
+    }
+
+    public void clearDB()
+    {
+        AsyncTask.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mCoronaDAO.nukeTable();
+            }
+        });
+    }
+
+    //*********************************************************************
+    public LiveData<Integer> countSum(int type)
+    //*********************************************************************
+    {
+        return mCoronaDAO.getSum(type);
+    }
+
+    //*********************************************************************
+    public LiveData<Integer> countSum(int type, String countryName)
+    //*********************************************************************
+    {
+        return mCoronaDAO.getSum(type, countryName);
+    }
+
 }

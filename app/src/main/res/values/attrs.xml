@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="app_background" format="reference" />
+    <attr name="app_foreground" format="reference" />
+    <attr name="background_text_color" format="reference" />
+    <attr name="green_color_background" format="reference" />
+    <attr name="blue_color_background" format="reference" />
+    <attr name="purple_color_background" format="reference" />
+    <attr name="yellow_color_background" format="reference" />
+    <attr name="pink_color_background" format="reference" />
+    <attr name="red_color_background" format="reference" />
+    <attr name="brown_color_background" format="reference" />
+    <attr name="grey_color_background" format="reference" />
+
+</resources>
