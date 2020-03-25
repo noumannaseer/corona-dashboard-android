@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fantech.covidplus">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".Covid"
+        android:allowBackup="true"
+        android:icon="@mipmap/covid_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/covid_icon_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.HomeActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAjIyfVnSTMZbYxjfwsV-p1GPntl8zV6Kg" />
+    </application>
+
+</manifest>
