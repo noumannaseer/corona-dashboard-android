@@ -130,9 +130,9 @@ public class MainActivity
     //*********************************************************************
     {
         val service = ServiceGenerator.createService(CoronaServices.class, Constants.BASE_URL);
-        val deathStats = service.getConfirmedCases();
+        val confirmedCases = service.getConfirmedCases();
         showLoadingDialog();
-        deathStats.enqueue(new Callback<ResponseBody>()
+        confirmedCases.enqueue(new Callback<ResponseBody>()
         {
             //*********************************************************************
             @SneakyThrows
