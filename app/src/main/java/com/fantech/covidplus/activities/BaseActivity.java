@@ -25,7 +25,6 @@ public abstract class BaseActivity
         extends AppCompatActivity
 //****************************************************
 {
-
     private Dialog mDialog;
 
     //********************************************************************
@@ -36,7 +35,6 @@ public abstract class BaseActivity
         ThemeUtils.applyTheme(this);
         super.onCreate(savedInstanceState);
         onCreation(savedInstanceState);
-
     }
 
     //********************************************************************
@@ -80,7 +78,8 @@ public abstract class BaseActivity
     protected void hideLoadingDialog()
     //********************************************************************
     {
-        mDialog.dismiss();
+        if (mDialog != null && mDialog.isShowing())
+            mDialog.dismiss();
     }
 
     /**

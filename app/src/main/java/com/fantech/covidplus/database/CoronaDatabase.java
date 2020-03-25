@@ -11,19 +11,18 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-//******************************************************************
+
 @Database(entities = { Corona.class }, version = 1)
 @TypeConverters({ DateConverter.class })
-public abstract class CoronaDatabase
-        extends RoomDatabase
+//******************************************************************
+public abstract class CoronaDatabase extends RoomDatabase
 //******************************************************************
 {
+    public static CoronaDatabase sInstance;
 
     //******************************************************************
     public abstract CoronaDAO taskDao();
     //******************************************************************
-
-    public static CoronaDatabase sInstance;
 
     //******************************************************************
     // Get a database instance
@@ -40,8 +39,9 @@ public abstract class CoronaDatabase
     // Create the database
     //******************************************************************
     static CoronaDatabase create(Context context)
-//******************************************************************
+    //******************************************************************
     {
+        //Please move the database name to DB constants.
         RoomDatabase.Builder<CoronaDatabase> builder = Room.databaseBuilder(
                 context.getApplicationContext(),
                 CoronaDatabase.class, "corona");

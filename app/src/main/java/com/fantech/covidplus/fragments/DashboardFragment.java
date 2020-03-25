@@ -15,15 +15,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 //********************************************
-public class DashboardFragment
-        extends BaseFragment
+public class DashboardFragment extends BaseFragment
 //********************************************
 {
-
     private View rootView;
     private FragmentDashboardBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
-
 
     //***********************************************************************
     @Override
@@ -44,32 +41,30 @@ public class DashboardFragment
     private void initControls()
     //**********************************************
     {
-        mCoronaStatsViewModel = ViewModelProviders.of(this)
-                                                  .get(CoronaStatsViewModel.class);
+        mCoronaStatsViewModel = ViewModelProviders.of(this).get(CoronaStatsViewModel.class);
         addTabs();
-        mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH)
-                             .observe(this
-                                     , new Observer<Integer>()
-                                     {
-                                         @Override
-                                         public void onChanged(Integer integer)
-                                         {
-                                             mBinding.totalDeaths.setText(String.valueOf(integer));
-                                         }
-                                     });
 
-        mCoronaStatsViewModel.countSum(Constants.REPORT_CONFIRMED)
-                             .observe(this
-                                     , new Observer<Integer>()
-                                     {
-                                         @Override
-                                         public void onChanged(Integer integer)
-                                         {
-                                             mBinding.totalConfirmed.setText(
-                                                     String.valueOf(integer));
+        mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH).observe(this, new Observer<Integer>()
+        {
+            //**********************************************
+            @Override
+            public void onChanged(Integer integer)
+            //**********************************************
+            {
+                mBinding.totalDeaths.setText(String.valueOf(integer));
+            }
+        });
 
-                                         }
-                                     });
+        mCoronaStatsViewModel.countSum(Constants.REPORT_CONFIRMED).observe(this, new Observer<Integer>()
+        {
+            //**********************************************
+            @Override
+            public void onChanged(Integer integer)
+            //**********************************************
+            {
+                mBinding.totalConfirmed.setText(String.valueOf(integer));
+            }
+        });
 
     }
 

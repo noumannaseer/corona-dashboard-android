@@ -19,8 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import lombok.val;
 
 //********************************************************
-public class CountriesFragment
-        extends BaseFragment
+public class CountriesFragment extends BaseFragment
         implements CountriesListAdapter.CountryClickListener
 
 //********************************************************
@@ -53,11 +52,11 @@ public class CountriesFragment
     {
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
-        mCoronaStatsViewModel.getCountriesList()
-                             .observe(this, strings -> {
-                                 mCountriesList = strings;
-                                 showCountriesOnRecyclerView(mCountriesList);
-                             });
+        mCoronaStatsViewModel.getCountriesList().observe(this, strings ->
+        {
+            mCountriesList = strings;
+            showCountriesOnRecyclerView(mCountriesList);
+        });
         attachTextChangeListener();
 
     }
@@ -68,24 +67,29 @@ public class CountriesFragment
     {
         mBinding.country.addTextChangedListener(new TextWatcher()
         {
+            //***************************************************************
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            //***************************************************************
             {
 
             }
 
+            //***************************************************************
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
+            //***************************************************************
             {
                 if (s.length() == 0)
                     showCountriesOnRecyclerView(mCountriesList);
                 else
                     filterCountry(s.toString());
-
             }
 
+            //***************************************************************
             @Override
             public void afterTextChanged(Editable s)
+            //***************************************************************
             {
 
             }
@@ -96,16 +100,13 @@ public class CountriesFragment
     private void filterCountry(String searchCountry)
     //***********************************************************************
     {
-        List<String> filteredList = new ArrayList<>();
-
+        List<String> filteredCountryList = new ArrayList<>();
         for (val country : mCountriesList)
         {
-            if (country.toLowerCase()
-                       .contains(searchCountry.toLowerCase()))
-                filteredList.add(country);
+            if (country.toLowerCase().contains(searchCountry.toLowerCase()))
+                filteredCountryList.add(country);
         }
-        showCountriesOnRecyclerView(filteredList);
-
+        showCountriesOnRecyclerView(filteredCountryList);
     }
 
     //***********************************************************************
@@ -115,7 +116,6 @@ public class CountriesFragment
         CountriesListAdapter countriesListAdapter = new CountriesListAdapter(countriesList, this);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(countriesListAdapter);
-
     }
 
     //***********************************************************************

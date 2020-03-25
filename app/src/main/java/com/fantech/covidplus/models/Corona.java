@@ -20,8 +20,7 @@ public class Corona
     private String state;
     private String country;
     private Date date;
-
-
+    //Use Lombok to process and avoid getter setter methods.
     //************************************
     public int getId()
     //************************************

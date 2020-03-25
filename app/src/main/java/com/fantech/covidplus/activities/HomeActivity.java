@@ -1,7 +1,6 @@
 package com.fantech.covidplus.activities;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.fantech.covidplus.R;
 import com.fantech.covidplus.databinding.ActivityHomeBinding;
@@ -9,21 +8,16 @@ import com.fantech.covidplus.fragments.CountriesFragment;
 import com.fantech.covidplus.fragments.DashboardFragment;
 import com.fantech.covidplus.fragments.MapViewFragment;
 import com.fantech.covidplus.fragments.StaySafeFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 //**************************************************
-public class HomeActivity
-        extends BaseActivity
+public class HomeActivity extends BaseActivity
 //**************************************************
 {
-
-
     private ActivityHomeBinding mBinding;
     private DashboardFragment mDashboardFragment;
     private CountriesFragment mCountriesFragment;
@@ -47,31 +41,27 @@ public class HomeActivity
         mCountriesFragment = new CountriesFragment();
         mMapViewFragment = new MapViewFragment();
         mStaySafeFragment = new StaySafeFragment();
-        mBinding.bottomNavigation.setOnNavigationItemSelectedListener(
-                item -> {
-                    if (item.getItemId() == R.id.dashboard)
-                    {
-                        loadFragment(mDashboardFragment);
-                        return true;
-                    }
-                    else if (item.getItemId() == R.id.countries)
-                    {
-                        loadFragment(mCountriesFragment);
-                        return true;
-                    }
-                    else if (item.getItemId() == R.id.map_view)
-                    {
-                        loadFragment(mMapViewFragment);
-                        return true;
-                    }
-                    else if (item.getItemId() == R.id.stay_safe)
-                    {
-                        loadFragment(mStaySafeFragment);
-                        return true;
-                    }
-                    return false;
-                });
-        loadFragment(mDashboardFragment);
+        mBinding.bottomNavigation.setOnNavigationItemSelectedListener(item ->
+        {
+            switch (item.getItemId())
+            {
+            case R.id.dashboard:
+                loadFragment(mDashboardFragment);
+                break;
+            case R.id.countries:
+                loadFragment(mCountriesFragment);
+                break;
+            case R.id.map_view:
+                loadFragment(mMapViewFragment);
+                break;
+            case R.id.stay_safe:
+                loadFragment(mStaySafeFragment);
+                break;
+            default:
+                break;
+            }
+            return true;
+        });
     }
 
     //**********************************************

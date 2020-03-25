@@ -9,13 +9,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
-
 //************************************************
 public class ServiceGenerator
 //************************************************
 {
-    private @Getter
-    static Retrofit mRetroFit;
+    private @Getter static Retrofit mRetroFit;
 
     //**************************************
     public static Retrofit getRetrofitInstance(String baseUrl)

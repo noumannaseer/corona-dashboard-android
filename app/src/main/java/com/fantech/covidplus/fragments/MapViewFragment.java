@@ -22,16 +22,11 @@ public class MapViewFragment
         implements OnMapReadyCallback
 //*****************************************************
 {
-
-
     private static final String MAP_VIEW_BUNDLE_KEY = "MAP_VIEW_BUNDLE_KEY";
-
-
     private View rootView;
     private FragmentMapViewBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
     private GoogleMap mGoogleMap;
-
 
     //***********************************************************************
     @Override
