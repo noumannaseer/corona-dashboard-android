@@ -43,7 +43,7 @@ public class DashboardFragment extends BaseFragment
     {
         mCoronaStatsViewModel = ViewModelProviders.of(this).get(CoronaStatsViewModel.class);
         addTabs();
-
+        // here should we display the progressbar in while we fetch the data. Don't overuse the 3rd party libraries.
         mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH).observe(this, new Observer<Integer>()
         {
             //**********************************************
