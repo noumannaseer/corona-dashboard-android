@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 
 import com.fantech.covidplus.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 //******************************************************************
 public class StaySafeFragment extends Fragment
 //******************************************************************

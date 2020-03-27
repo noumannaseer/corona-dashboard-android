@@ -6,7 +6,11 @@ import android.os.AsyncTask;
 import com.fantech.covidplus.dao.CoronaDAO;
 import com.fantech.covidplus.database.CoronaDatabase;
 import com.fantech.covidplus.models.Corona;
+import com.fantech.covidplus.models.CoronaGraph;
+import com.fantech.covidplus.models.CoronaMap;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -102,4 +106,34 @@ public class CoronaStatsViewModel
         return mCoronaDAO.getSum(type, countryName);
     }
 
+    //*********************************************************************
+    public LiveData<List<CoronaMap>> getMapViewList(int reportType)
+    //*********************************************************************
+    {
+        return mCoronaDAO.getMapStats(reportType);
+    }
+
+    //*********************************************************************
+    public LiveData<List<String>> getProvinceList(String countryName)
+    //*********************************************************************
+    {
+        return mCoronaDAO.getProvinceList(countryName);
+    }
+
+    //*********************************************************************
+    public LiveData<Integer> getProvinceStat(int type, String countryName, String state)
+    //*********************************************************************
+    {
+        return mCoronaDAO.getSum(type, countryName, state);
+    }
+
+    //*********************************************************************
+    public LiveData<List<CoronaGraph>> getLast30DaysRecord(Date currentDate)
+    //*********************************************************************
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentDate.getTime());
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
+        return mCoronaDAO.getLast30DaysRecord(calendar.getTime(), currentDate);
+    }
 }

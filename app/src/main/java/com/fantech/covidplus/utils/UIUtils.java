@@ -728,7 +728,7 @@ public class UIUtils
     //*************************************************************
     {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(timestamp * 1000);
+        cal.setTimeInMillis(timestamp);
         String date = DateFormat.format(format, cal)
                                 .toString();
         return date;

@@ -30,5 +30,6 @@
     <color name="red_color_background2">#CF5B3F</color>
     <color name="brown_color_background2">#8E695B</color>
     <color name="grey_color_background2">#7E8689</color>
+    <color name="transparent_red">#50EE0000</color>
 
 </resources>

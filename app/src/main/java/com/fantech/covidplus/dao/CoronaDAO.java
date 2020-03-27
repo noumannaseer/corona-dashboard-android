@@ -1,14 +1,17 @@
 package com.fantech.covidplus.dao;
 
 import com.fantech.covidplus.models.Corona;
+import com.fantech.covidplus.models.CoronaGraph;
+import com.fantech.covidplus.models.CoronaMap;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import retrofit2.http.DELETE;
 
 //***********************************************
 @Dao
@@ -32,13 +35,27 @@ public interface CoronaDAO
     @Query("SELECT sum(quantity) from corona where report_type=:type and country=:country")
     LiveData<Integer> getSum(int type, String country);
 
+    @Query("SELECT sum(quantity) from corona where report_type=:type and country=:country and state=:state")
+    LiveData<Integer> getSum(int type, String country, String state);
 
-    @Insert()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Corona corona);
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Corona> corona);
 
     @Query("DELETE FROM corona")
     void nukeTable();
+
+    @Query("select distinct country ,(select count(quantity) from corona where country=country) as quantity,latitude,longitude from corona where report_type=:reportType order by  quantity desc")
+    LiveData<List<CoronaMap>> getMapStats(int reportType);
+
+    @Query("select  distinct state from corona where country=:countryName ")
+    LiveData<List<String>> getProvinceList(String countryName);
+
+    // Select one task from Task table by id
+    @Query("SELECT date,sum(quantity) as quantity FROM corona WHERE date between :startDate AND :endDate GROUP BY date")
+    LiveData<List<CoronaGraph>> getLast30DaysRecord(Date startDate, Date endDate);
+
 }
