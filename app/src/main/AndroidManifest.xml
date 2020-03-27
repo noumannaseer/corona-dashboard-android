@@ -13,11 +13,12 @@
         android:roundIcon="@mipmap/covid_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.CountryStatsActivity"></activity>
         <activity
             android:name=".activities.HomeActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

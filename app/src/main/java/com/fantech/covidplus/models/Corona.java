@@ -2,8 +2,11 @@ package com.fantech.covidplus.models;
 
 import java.util.Date;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 
 //********************************************
@@ -12,14 +15,18 @@ public class Corona
 //********************************************
 {
     @PrimaryKey(autoGenerate = true)
+    @Nullable
     private int id;
+    @Nullable
     private int report_type;
     private String latitude;
     private String longitude;
     private int quantity;
     private String state;
     private String country;
+    @TypeConverters({DateConverter.class})
     private Date date;
+
     //Use Lombok to process and avoid getter setter methods.
     //************************************
     public int getId()

@@ -1,5 +1,6 @@
 package com.fantech.covidplus.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fantech.covidplus.activities.CountryStatsActivity;
 import com.fantech.covidplus.adapters.CountriesListAdapter;
 import com.fantech.covidplus.databinding.FragmentCountriesBinding;
+import com.fantech.covidplus.utils.AndroidUtil;
 import com.fantech.covidplus.view_models.CoronaStatsViewModel;
 
 import java.util.ArrayList;
@@ -19,7 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import lombok.val;
 
 //********************************************************
-public class CountriesFragment extends BaseFragment
+public class CountriesFragment
+        extends BaseFragment
         implements CountriesListAdapter.CountryClickListener
 
 //********************************************************
@@ -52,11 +56,16 @@ public class CountriesFragment extends BaseFragment
     {
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
-        mCoronaStatsViewModel.getCountriesList().observe(this, strings ->
-        {
-            mCountriesList = strings;
-            showCountriesOnRecyclerView(mCountriesList);
-        });
+        showLoadingDialog();
+        mCoronaStatsViewModel.getCountriesList()
+                             .observe(this, strings ->
+                             {
+                                 mCountriesList = strings;
+                                 showCountriesOnRecyclerView(mCountriesList);
+                                 AndroidUtil.handler.postDelayed(() -> {
+                                     hideLoadingDialog();
+                                 }, 1000);
+                             });
         attachTextChangeListener();
 
     }
@@ -103,7 +112,8 @@ public class CountriesFragment extends BaseFragment
         List<String> filteredCountryList = new ArrayList<>();
         for (val country : mCountriesList)
         {
-            if (country.toLowerCase().contains(searchCountry.toLowerCase()))
+            if (country.toLowerCase()
+                       .contains(searchCountry.toLowerCase()))
                 filteredCountryList.add(country);
         }
         showCountriesOnRecyclerView(filteredCountryList);
@@ -123,6 +133,9 @@ public class CountriesFragment extends BaseFragment
     public void onCountryClick(String country)
     //***********************************************************************
     {
+        Intent countryStatsIntent = new Intent(getActivity(), CountryStatsActivity.class);
+        countryStatsIntent.putExtra(CountryStatsActivity.COUNTRY_NAME, country);
+        startActivity(countryStatsIntent);
 
     }
 }

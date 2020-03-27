@@ -62,6 +62,7 @@ public class HomeActivity extends BaseActivity
             }
             return true;
         });
+        loadFragment(mDashboardFragment);
     }
 
     //**********************************************

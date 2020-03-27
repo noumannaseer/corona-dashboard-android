@@ -12,8 +12,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import lombok.NonNull;
 import lombok.val;
+
 //******************************************************************
-public class CountriesListAdapter extends RecyclerView.Adapter<CountriesListAdapter.ViewHolder>
+public class CountriesListAdapter
+        extends RecyclerView.Adapter<CountriesListAdapter.ViewHolder>
 //******************************************************************
 {
     private List<String> mCountriesList;

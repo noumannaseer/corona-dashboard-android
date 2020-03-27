@@ -22,7 +22,7 @@ public class ThemeUtils
     public static void applyTheme(Activity activity)
     //****************************************************************
     {
-        if (!getCurrentThemeIsLight())
+        if (!getCurrentThemeIsDark())
         {
             activity.getApplicationContext()
                     .setTheme(R.style.AppTheme);
@@ -53,7 +53,7 @@ public class ThemeUtils
     }
 
     //****************************************************************
-    public static boolean getCurrentThemeIsLight()
+    public static boolean getCurrentThemeIsDark()
     //****************************************************************
     {
         SharedPreferences sharedPreferences = getApplicationContext()

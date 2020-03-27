@@ -19,7 +19,8 @@ import lombok.NonNull;
 import lombok.val;
 
 //************************************************************
-public abstract class BaseFragment extends Fragment
+public abstract class BaseFragment
+        extends Fragment
 //************************************************************
 {
     private Activity mBaseActivity;
@@ -80,6 +81,7 @@ public abstract class BaseFragment extends Fragment
         if (mLoadingBar == null)
         {
             mLoadingBar = new Dialog(mBaseActivity, R.style.CustomTransparentDialog);
+            mLoadingBar.setContentView(R.layout.fragment_loading_dialog);
             mLoadingBar.setCancelable(false);
             mLoadingBar.setCanceledOnTouchOutside(false);
         }
