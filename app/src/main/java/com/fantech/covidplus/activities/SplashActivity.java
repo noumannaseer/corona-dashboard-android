@@ -11,6 +11,7 @@ import com.fantech.covidplus.models.Corona;
 import com.fantech.covidplus.network.ServiceCalls;
 import com.fantech.covidplus.utils.AndroidUtil;
 import com.fantech.covidplus.utils.Constants;
+import com.fantech.covidplus.utils.SharedPreferencesUtils;
 import com.fantech.covidplus.utils.ThemeUtils;
 import com.fantech.covidplus.view_models.CoronaStatsViewModel;
 
@@ -76,7 +77,11 @@ public class SplashActivity
                            if (mIsObserved)
                                return;
                            mIsObserved = true;
-                           if (coronas.size() == 0)
+                           val lastUpdated = SharedPreferencesUtils.getLong(
+                                   SharedPreferencesUtils.LAST_UPDATED_TIME);
+                           long diff = System.currentTimeMillis() - lastUpdated;
+                           int numOfDays = (int)(diff / (1000 * 60 * 60 * 24));
+                   if (coronas.size() == 0 || lastUpdated == 0 || numOfDays >= 1)
                                loadStats();
                            else
                            {
@@ -113,40 +118,41 @@ public class SplashActivity
         mApiCount = 0;
         mCoronaList = new ArrayList<>();
         mCalender = Calendar.getInstance();
+        mStatsViewModel.clearDB();
         ServiceCalls.instance()
                     .loadConfirmedStats((isSuccessFull, errorMessage, data) ->
-                                        {
-                                            if (isSuccessFull)
-                                            {
-                                                processData(data, Constants.REPORT_CONFIRMED);
-                                                return;
-                                            }
-                                            AndroidUtil.toast(false, errorMessage);
-                                            hideLoadingDialog();
-                                        });
+        {
+            if (isSuccessFull)
+            {
+                processData(data, Constants.REPORT_CONFIRMED);
+                return;
+            }
+            AndroidUtil.toast(false, errorMessage);
+            hideLoadingDialog();
+        });
 
         ServiceCalls.instance()
                     .loadDeathStats((isSuccessFull, errorMessage, data) ->
-                                    {
-                                        if (isSuccessFull)
-                                        {
-                                            processData(data, Constants.REPORT_DEATH);
-                                            return;
-                                        }
-                                        AndroidUtil.toast(false, errorMessage);
-                                        hideLoadingDialog();
-                                    });
+                    {
+                        if (isSuccessFull)
+                        {
+                            processData(data, Constants.REPORT_DEATH);
+                            return;
+                        }
+                        AndroidUtil.toast(false, errorMessage);
+                        hideLoadingDialog();
+                    });
         ServiceCalls.instance()
                     .loadRecoveredStats((isSuccessFull, errorMessage, data) ->
-                                        {
-                                            if (isSuccessFull)
-                                            {
-                                                processData(data, Constants.REPORT_RECOVERED);
-                                                return;
-                                            }
-                                            AndroidUtil.toast(false, errorMessage);
-                                            hideLoadingDialog();
-                                        });
+        {
+            if (isSuccessFull)
+            {
+                processData(data, Constants.REPORT_RECOVERED);
+                return;
+            }
+            AndroidUtil.toast(false, errorMessage);
+            hideLoadingDialog();
+        });
 
     }
 
@@ -189,6 +195,8 @@ public class SplashActivity
         {
             hideLoadingDialog();
             mStatsViewModel.insert(mCoronaList);
+            SharedPreferencesUtils.setValue(SharedPreferencesUtils.LAST_UPDATED_TIME,
+                                            System.currentTimeMillis());
             gotoHomeActivity();
         }
     }

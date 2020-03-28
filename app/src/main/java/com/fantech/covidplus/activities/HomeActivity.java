@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.fantech.covidplus.R;
 import com.fantech.covidplus.databinding.ActivityHomeBinding;
+import com.fantech.covidplus.fragments.BlogFragment;
 import com.fantech.covidplus.fragments.CountriesFragment;
 import com.fantech.covidplus.fragments.DashboardFragment;
 import com.fantech.covidplus.fragments.MapViewFragment;
@@ -15,14 +16,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 //**************************************************
-public class HomeActivity extends BaseActivity
+public class HomeActivity
+        extends BaseActivity
 //**************************************************
 {
     private ActivityHomeBinding mBinding;
     private DashboardFragment mDashboardFragment;
     private CountriesFragment mCountriesFragment;
     private MapViewFragment mMapViewFragment;
-    private StaySafeFragment mStaySafeFragment;
+    private BlogFragment mBlogFragment;
 
     //**************************************************
     @Override
@@ -40,28 +42,32 @@ public class HomeActivity extends BaseActivity
         mDashboardFragment = new DashboardFragment();
         mCountriesFragment = new CountriesFragment();
         mMapViewFragment = new MapViewFragment();
-        mStaySafeFragment = new StaySafeFragment();
+        mBlogFragment = new BlogFragment();
         mBinding.bottomNavigation.setOnNavigationItemSelectedListener(item ->
-        {
-            switch (item.getItemId())
-            {
-            case R.id.dashboard:
-                loadFragment(mDashboardFragment);
-                break;
-            case R.id.countries:
-                loadFragment(mCountriesFragment);
-                break;
-            case R.id.map_view:
-                loadFragment(mMapViewFragment);
-                break;
-            case R.id.stay_safe:
-                loadFragment(mStaySafeFragment);
-                break;
-            default:
-                break;
-            }
-            return true;
-        });
+          {
+              switch (item.getItemId())
+              {
+              case R.id.dashboard:
+                  loadFragment(
+                          mDashboardFragment);
+                  break;
+              case R.id.countries:
+                  loadFragment(
+                          mCountriesFragment);
+                  break;
+              case R.id.map_view:
+                  loadFragment(
+                          mMapViewFragment);
+                  break;
+              case R.id.stay_safe:
+                  loadFragment(
+                          mBlogFragment);
+                  break;
+              default:
+                  break;
+              }
+              return true;
+          });
         loadFragment(mDashboardFragment);
     }
 

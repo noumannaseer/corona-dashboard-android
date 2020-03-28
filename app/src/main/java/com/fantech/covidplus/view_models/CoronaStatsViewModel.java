@@ -98,7 +98,6 @@ public class CoronaStatsViewModel
     public void clearDB()
     //****************************************************************
     {
-        //use the Workermanager. avoid Asynctask for memory leaks.
         AsyncTask.execute(new Runnable()
         {
             @Override
