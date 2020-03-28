@@ -1,6 +1,7 @@
 package com.fantech.covidplus.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,10 +13,14 @@ import lombok.val;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
 import com.fantech.covidplus.R;
 import com.fantech.covidplus.activities.CountryStatsActivity;
 import com.fantech.covidplus.databinding.FragmentMapViewBinding;
+import com.fantech.covidplus.models.Corona;
+import com.fantech.covidplus.models.CoronaCountry;
 import com.fantech.covidplus.models.CoronaMap;
 import com.fantech.covidplus.utils.AndroidUtil;
 import com.fantech.covidplus.utils.Constants;
@@ -33,21 +38,31 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 //*****************************************************
 public class MapViewFragment
         extends BaseFragment
-        implements OnMapReadyCallback, GoogleMap.OnCircleClickListener
 //*****************************************************
 {
-    private static final String MAP_VIEW_BUNDLE_KEY = "MAP_VIEW_BUNDLE_KEY";
     private View rootView;
     private FragmentMapViewBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
     private GoogleMap mGoogleMap;
     private List<CoronaMap> mMapData;
+    WebView view;
+    private List<CoronaCountry> mCountriesList;
+    private List<Corona> mDeathStats;
+    private List<Corona> mRecoveredStats;
+    private List<Corona> mConfirmedStats;
 
+
+    @SuppressLint("SetJavaScriptEnabled")
     //***********************************************************************
     @Override
     public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
@@ -58,7 +73,6 @@ public class MapViewFragment
             mBinding = FragmentMapViewBinding.inflate(inflater, parent, false);
             rootView = mBinding.getRoot();
             super.setFragment(MapViewFragment.this);
-            initGoogleMap(savedInstanceState);
             initControls();
 
         }
@@ -71,131 +85,130 @@ public class MapViewFragment
     {
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
-    }
 
-    //******************************************************************
-    private void initGoogleMap(Bundle savedInstanceState)
-    //******************************************************************
-    {
-
-        Bundle mapViewBundle = null;
-        if (savedInstanceState != null)
-        {
-            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
-        }
-        mBinding.mapview.onCreate(mapViewBundle);
-        mBinding.mapview.getMapAsync(this);
-    }
-
-
-    //******************************************************************
-    @Override
-    public void onResume()
-    //******************************************************************
-    {
-        super.onResume();
-        mBinding.mapview.onResume();
-    }
-
-    //******************************************************************
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onMapReady(GoogleMap map)
-    //******************************************************************
-    {
-        mGoogleMap = map;
-        mGoogleMap.getUiSettings()
-                  .setAllGesturesEnabled(true);
-        mGoogleMap.getUiSettings()
-                  .setZoomControlsEnabled(true);
-        mGoogleMap.getUiSettings()
-                  .setAllGesturesEnabled(true);
-        mCoronaStatsViewModel.getMapViewList(Constants.REPORT_DEATH)
-                             .observe(this, new Observer<List<CoronaMap>>()
+        view = rootView.findViewById(R.id.webview);
+        mCoronaStatsViewModel.getCountriesListDeath()
+                             .observe(this, strings ->
                              {
-                                 @Override
-                                 public void onChanged(List<CoronaMap> coronas)
-                                 {
-                                     mMapData = coronas;
-                                     showDataOnMap();
-
-                                 }
+                                 mDeathStats = strings;
+                                 processList();
                              });
+        mCoronaStatsViewModel.getCountriesListRecovered()
+                             .observe(this, strings ->
+                             {
+                                 mRecoveredStats = strings;
+                                 processList();
+                             });
+        mCoronaStatsViewModel.getCountriesListConfirmed()
+                             .observe(this, strings ->
+                             {
+                                 mConfirmedStats = strings;
+                                 processList();
+                             });
+
     }
 
-    //*********************************************
-    private void showDataOnMap()
-    //*********************************************
-
+    private void processList()
     {
-        mGoogleMap.setOnCircleClickListener(this);
-        if (mMapData == null || mMapData.size() == 0)
-        {
+        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null)
             return;
+        mCountriesList = new ArrayList<>();
+        for (int i = 0; i < mRecoveredStats.size(); i++)
+        {
+            val recovered = mRecoveredStats.get(i);
+            val death = mDeathStats.get(i);
+            val confirmed = mConfirmedStats.get(i);
+
+            mCountriesList.add(new CoronaCountry(recovered.getLatitude(),
+                                                 recovered.getLongitude(),
+                                                 recovered.getCountry(),
+                                                 death.getQuantity(),
+                                                 recovered.getQuantity(),
+                                                 confirmed.getQuantity()));
         }
 
-        int index = 0;
-        if (mGoogleMap != null)
-            mGoogleMap.clear();
-        LatLngBounds.Builder mBuilder = new LatLngBounds.Builder();
-        for (val corona : mMapData)
+        view.getSettings()
+            .setJavaScriptEnabled(true);
+        view.addJavascriptInterface(new JavaScriptInterface(getContext(), mCountriesList),
+                                    "AndroidNativeCode");
+
+        view.loadUrl("file:///android_asset/index.html");
+    }
+
+
+    //*****************************************************
+    public class JavaScriptInterface
+            //*****************************************************
+    {
+        private Context mContext;
+        private List<CoronaCountry> mCountryList;
+
+        //*****************************************************
+        public JavaScriptInterface(Context mContext, List<CoronaCountry> mCountryList)
+        //*****************************************************
+        {
+            this.mContext = mContext;
+            this.mCountryList = mCountryList;
+        }
+
+
+        //*****************************************************
+        @JavascriptInterface
+        public void getValueJson()
+                throws JSONException
+        //*****************************************************
+        {
+            final JSONArray jArray = new JSONArray();
+
+
+            for (val country : mCountryList)
+            {
+                JSONObject jObject = new JSONObject();
+                jObject.put("country", country.getCountry());
+                jObject.put("deaths", country.getTotalDeath());
+                jObject.put("recovered", country.getTotalRecovered());
+                jObject.put("confirmed", country.getTotalConfirmed());
+                jArray.put(jObject);
+            }
+
+            //*****************************************************
+            getActivity().runOnUiThread(new Runnable()
+                    //*****************************************************
+            {
+                //*****************************************************
+                @Override
+                public void run()
+                //*****************************************************
+                {
+                    int isDark = 0;
+                    if (ThemeUtils.getCurrentThemeIsDark())
+                        isDark = 1;
+                    view.loadUrl("javascript:setJson(" + jArray + "," + isDark + ")");
+                }
+            });
+
+        }
+
+        //*****************************************************
+        @JavascriptInterface
+        public void onMarkerCLick(String country)
+                throws JSONException
+        //*****************************************************
         {
 
-            mBuilder.include(new LatLng(Double.parseDouble(corona.getLatitude())
-                    , Double.parseDouble(corona.getLongitude())));
-            addMarkerToMap(corona.getCountry(),
-                           "",
-                           Double.parseDouble(corona.getLatitude()),
-                           Double.parseDouble(corona.getLongitude()),
-                           index, corona.getQuantity() * 10);
+            getActivity().runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Intent countryStatIntent = new Intent(getActivity(),
+                                                          CountryStatsActivity.class);
+                    countryStatIntent.putExtra(CountryStatsActivity.COUNTRY_NAME, country);
+                    startActivity(countryStatIntent);
+                }
+            });
 
-            index++;
         }
-        if (ThemeUtils.getCurrentThemeIsDark())
-            mGoogleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.mapview_night_mode));
-        LatLngBounds bounds = mBuilder.build();
-        int padding = 10;
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        mGoogleMap.animateCamera(cu);
-
-    }
-
-
-    //******************************************************************
-    private void addMarkerToMap(String title, String snippet, double lat, double lng, int index, int radius)
-    //******************************************************************
-    {
-
-        val circle = mGoogleMap.addCircle(new CircleOptions().center(new LatLng(lat, lng))
-                                                             .radius(radius)
-                                                             .strokeWidth(0f)
-                                                             .fillColor(AndroidUtil.getColor(
-                                                                     R.color.transparent_red)));
-        circle.setTag(index);
-        circle.setClickable(true);
-    }
-
-    //****************************************************
-    public BitmapDescriptor getMarkerIcon(String color)
-    //****************************************************
-    {
-        float[] hsv = new float[3];
-        Color.colorToHSV(Color.parseColor(color), hsv);
-        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
-    }
-
-    //****************************************************
-    @Override
-    public void onCircleClick(Circle circle)
-    //****************************************************
-    {
-        val index = Integer.parseInt(circle.getTag()
-                                           .toString());
-        Intent countryStatsIntent = new Intent(getActivity(), CountryStatsActivity.class);
-        countryStatsIntent.putExtra(CountryStatsActivity.COUNTRY_NAME, mMapData.get(index)
-                                                                               .getCountry());
-        startActivity(countryStatsIntent);
     }
 
 }

@@ -167,10 +167,10 @@ public class SplashActivity
             for (int j = 4; j < columns.length; j++)
             {
                 Corona corona = new Corona();
-                corona.setState(rowValues[0]);
-                corona.setCountry(rowValues[1]);
-                corona.setLatitude(rowValues[2]);
-                corona.setLongitude(rowValues[3]);
+                corona.setState(rowValues[0].replace("\"", ""));
+                corona.setCountry(rowValues[1].replace("\"", ""));
+                corona.setLatitude(rowValues[2].replace("\"", ""));
+                corona.setLongitude(rowValues[3].replace("\"", ""));
                 val date = columns[j].split("/");
                 mCalender.set(Calendar.MONTH, (Integer.parseInt(date[0]) - 1));
                 mCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date[1]));

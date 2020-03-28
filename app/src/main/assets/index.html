@@ -1,0 +1,229 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script type="text/javascript">
+        var newData = [['country', 'deaths']];
+        // call java function from javascript
+        AndroidNativeCode.getValueJson();
+        var appColor = "#FFFFFF";
+
+        // this function is used to send data from java class to html page using javascript
+        function setJson(Jsonobject, isDark) {
+
+            if (isDark === 1) {
+                document.body.style.backgroundColor = "#202124";
+                appColor = "#202124";
+            } else {
+                document.body.style.backgroundColor = "#FFFFFF";
+                appColor = "#FFFFFF";
+            }
+
+            for (var n = 0; n < Jsonobject.length; n++) {
+                // put the data in DataTable
+                newData.push([Jsonobject[n].country, parseInt(Jsonobject[n].deaths), `
+                <div class="map-shape-one" onclick="call('${Jsonobject[n].country}')">
+                <p><b>${Jsonobject[n].confirmed}</b> Confirmed</p>
+                <p><b>${Jsonobject[n].recovered}</b> Recovered</p>
+                <p><b>${Jsonobject[n].deaths}</b> Deaths</p>
+
+                </div>`]);
+            }
+
+        }
+
+        function call(abc) {
+            AndroidNativeCode.onMarkerCLick(abc);
+        }
+
+        function drawRegionsMap() {
+
+            var data;
+            data = new google.visualization.DataTable();
+
+            // determine the number of rows and columns.
+            var numRows = newData.length;
+            var numCols = newData[0].length;
+
+            // in this case the first column is of type 'string'.
+            data.addColumn('string', newData[0][0]);
+
+            // all other columns are of type 'number'.
+            for (var i = 1; i < numCols; i++)
+                data.addColumn('number', newData[0][i]);
+
+            data.addColumn({
+                type: 'string',
+                role: 'tooltip',
+                'p': {'html': true}
+            });
+
+            // now add the rows.
+            for (var i = 1; i < numRows; i++)
+                data.addRow(newData[i]);
+
+            var options = {
+                colorAxis: {colors: ['#FCA33B', '#F18C34', '#E4761F', '#D15F19']},
+                legend: 'none',
+                tooltip: {isHtml: true},
+                backgroundColor: appColor,
+                is3D: true
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);
+        }
+
+        google.charts.load('visualization', '1', {packages: ['geochart'], callback: drawRegionsMap});
+    </script>
+
+    <style>
+        .map-shape-one {
+            height: auto;
+            margin: auto;
+            max-width: 100%;
+            min-height: 40px;
+            min-width: 70px;
+            padding: 8px 8px 8px 8px;
+            width: auto;
+        }
+
+        .map-shape-one p {
+            margin: 0px;
+            text-align: center;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+
+        .map-shape-one p:first-child {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        body {
+            padding: 0px;
+            background-color: #202124
+        }
+
+    </style>
+</head>
+<body>
+<div id="regions_div" style="width: 400px; height: 100%;margin:0px"></div>
+</body>
+</html><html>
+       <head>
+           <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+           <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+           <script type="text/javascript">
+               var newData = [['country', 'deaths']];
+               // call java function from javascript
+               AndroidNativeCode.getValueJson();
+               var appColor = "#FFFFFF";
+
+               // this function is used to send data from java class to html page using javascript
+               function setJson(Jsonobject, isDark) {
+
+                   if (isDark === 1) {
+                       document.body.style.backgroundColor = "#202124";
+                       appColor = "#202124";
+                   } else {
+                       document.body.style.backgroundColor = "#FFFFFF";
+                       appColor = "#FFFFFF";
+                   }
+
+                   for (var n = 0; n < Jsonobject.length; n++) {
+                       // put the data in DataTable
+                       newData.push([Jsonobject[n].country, parseInt(Jsonobject[n].deaths), `
+       <div class="map-shape-one" onclick="call('${Jsonobject[n].country}')">
+       <p><b>${Jsonobject[n].confirmed}</b> Confirmed</p>
+       <p><b>${Jsonobject[n].recovered}</b> Recovered</p>
+       <p><b>${Jsonobject[n].deaths}</b> Deaths</p>
+
+       </div>`]);
+                   }
+
+               }
+
+               function call(abc) {
+                   AndroidNativeCode.onMarkerCLick(abc);
+               }
+
+               function drawRegionsMap() {
+
+                   var data;
+                   data = new google.visualization.DataTable();
+
+                   // determine the number of rows and columns.
+                   var numRows = newData.length;
+                   var numCols = newData[0].length;
+
+                   // in this case the first column is of type 'string'.
+                   data.addColumn('string', newData[0][0]);
+
+                   // all other columns are of type 'number'.
+                   for (var i = 1; i < numCols; i++)
+                       data.addColumn('number', newData[0][i]);
+
+                   data.addColumn({
+                       type: 'string',
+                       role: 'tooltip',
+                       'p': {'html': true}
+                   });
+
+                   // now add the rows.
+                   for (var i = 1; i < numRows; i++)
+                       data.addRow(newData[i]);
+
+                   var options = {
+                       colorAxis: {colors: ['#FCA33B', '#F18C34', '#E4761F', '#D15F19']},
+                       legend: 'none',
+                       tooltip: {isHtml: true},
+                       backgroundColor: appColor,
+                       is3D: true
+                   };
+
+                   var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+                   chart.draw(data, options);
+               }
+
+               google.charts.load('visualization', '1', {packages: ['geochart'], callback: drawRegionsMap});
+           </script>
+
+           <style>
+               .map-shape-one {
+                   height: auto;
+                   margin: auto;
+                   max-width: 100%;
+                   min-height: 40px;
+                   min-width: 70px;
+                   padding: 8px 8px 8px 8px;
+                   width: auto;
+               }
+
+               .map-shape-one p {
+                   margin: 0px;
+                   text-align: center;
+                   color: #000000;
+                   font-family: Arial, Helvetica, sans-serif;
+                   font-size: 12px;
+               }
+
+               .map-shape-one p:first-child {
+                   font-weight: bold;
+                   text-transform: uppercase;
+               }
+
+               body {
+                   padding: 0px;
+                   background-color: #202124
+               }
+
+           </style>
+       </head>
+       <body>
+       <div id="regions_div" style="width: 400px; height: 100%;margin:0px"></div>
+       </body>
+       </html>

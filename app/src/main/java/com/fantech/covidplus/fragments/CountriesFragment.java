@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 import com.fantech.covidplus.activities.CountryStatsActivity;
 import com.fantech.covidplus.adapters.CountriesListAdapter;
 import com.fantech.covidplus.databinding.FragmentCountriesBinding;
-import com.fantech.covidplus.utils.AndroidUtil;
+import com.fantech.covidplus.models.Corona;
+import com.fantech.covidplus.models.CoronaCountry;
 import com.fantech.covidplus.view_models.CoronaStatsViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -32,7 +35,11 @@ public class CountriesFragment
     private View rootView;
     private FragmentCountriesBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
-    private List<String> mCountriesList;
+    private List<CoronaCountry> mCountriesList;
+    private List<Corona> mDeathStats;
+    private List<Corona> mRecoveredStats;
+    private List<Corona> mConfirmedStats;
+    private boolean mIsAscending = true;
 
 
     //***********************************************************************
@@ -57,17 +64,67 @@ public class CountriesFragment
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
         showLoadingDialog();
-        mCoronaStatsViewModel.getCountriesList()
+        mCoronaStatsViewModel.getCountriesListDeath()
                              .observe(this, strings ->
                              {
-                                 mCountriesList = strings;
-                                 showCountriesOnRecyclerView(mCountriesList);
-                                 AndroidUtil.handler.postDelayed(() -> {
-                                     hideLoadingDialog();
-                                 }, 1000);
+                                 mDeathStats = strings;
+                                 processList();
                              });
-        attachTextChangeListener();
+        mCoronaStatsViewModel.getCountriesListRecovered()
+                             .observe(this, strings ->
+                             {
+                                 mRecoveredStats = strings;
+                                 processList();
+                             });
+        mCoronaStatsViewModel.getCountriesListConfirmed()
+                             .observe(this, strings ->
+                             {
+                                 mConfirmedStats = strings;
+                                 processList();
+                             });
 
+        attachTextChangeListener();
+        mBinding.filter.setOnClickListener(view -> showFilter());
+
+    }
+
+    //*************************************************************
+    private void showFilter()
+    //*************************************************************
+    {
+        FilterBottomSheet filterBottomSheet =
+                new FilterBottomSheet(
+                        (deathRange, isAscending) -> {
+                            mIsAscending = isAscending;
+                            showCountriesOnRecyclerView(mCountriesList);
+
+                        }, mIsAscending);
+        filterBottomSheet.show(getActivity().getSupportFragmentManager(),
+                               filterBottomSheet.getTag());
+
+    }
+
+    //*************************************************************
+    private void processList()
+    //*************************************************************
+    {
+        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null)
+            return;
+        mCountriesList = new ArrayList<>();
+        for (int i = 0; i < mRecoveredStats.size(); i++)
+        {
+            val recovered = mRecoveredStats.get(i);
+            val death = mDeathStats.get(i);
+            val confirmed = mConfirmedStats.get(i);
+
+            mCountriesList.add(new CoronaCountry(recovered.getLatitude(),
+                                                 recovered.getLongitude(),
+                                                 recovered.getCountry(),
+                                                 death.getQuantity(),
+                                                 recovered.getQuantity(),
+                                                 confirmed.getQuantity()));
+        }
+        showCountriesOnRecyclerView(mCountriesList);
     }
 
     //***************************************************************
@@ -109,10 +166,11 @@ public class CountriesFragment
     private void filterCountry(String searchCountry)
     //***********************************************************************
     {
-        List<String> filteredCountryList = new ArrayList<>();
+        List<CoronaCountry> filteredCountryList = new ArrayList<>();
         for (val country : mCountriesList)
         {
-            if (country.toLowerCase()
+            if (country.getCountry()
+                       .toLowerCase()
                        .contains(searchCountry.toLowerCase()))
                 filteredCountryList.add(country);
         }
@@ -120,12 +178,51 @@ public class CountriesFragment
     }
 
     //***********************************************************************
-    private void showCountriesOnRecyclerView(List<String> countriesList)
+    private void showCountriesOnRecyclerView(List<CoronaCountry> countriesList)
     //***********************************************************************
     {
+        if (mIsAscending)
+        {
+            Collections.sort(countriesList, new Comparator<CoronaCountry>()
+            {
+                @Override
+                public int compare(CoronaCountry o1, CoronaCountry o2)
+                {
+                    return o1.getCountry()
+                             .compareTo(o2.getCountry());
+                }
+
+                @Override
+                public boolean equals(Object obj)
+                {
+                    return false;
+                }
+            });
+
+        }
+        else
+        {
+            Collections.sort(countriesList, new Comparator<CoronaCountry>()
+            {
+                @Override
+                public int compare(CoronaCountry o1, CoronaCountry o2)
+                {
+                    return o2.getCountry()
+                             .compareTo(o1.getCountry());
+                }
+
+                @Override
+                public boolean equals(Object obj)
+                {
+                    return false;
+                }
+            });
+
+        }
         CountriesListAdapter countriesListAdapter = new CountriesListAdapter(countriesList, this);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(countriesListAdapter);
+        hideLoadingDialog();
     }
 
     //***********************************************************************

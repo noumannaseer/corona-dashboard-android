@@ -3,7 +3,7 @@ package com.fantech.covidplus.models;
 import androidx.room.Entity;
 
 //********************************************
-@Entity(tableName = "Corona")
+//@Entity(tableName = "Corona")
 public class CoronaMap
 //********************************************
 {
@@ -12,22 +12,30 @@ public class CoronaMap
     private String latitude;
     private String longitude;
 
+    //********************************************
     public String getLatitude()
+    //********************************************
     {
         return latitude;
     }
 
+    //********************************************
     public void setLatitude(String latitude)
+    //********************************************
     {
         this.latitude = latitude;
     }
 
+    //********************************************
     public String getLongitude()
+    //********************************************
     {
         return longitude;
     }
 
+    //********************************************
     public void setLongitude(String longitude)
+    //********************************************
     {
         this.longitude = longitude;
     }

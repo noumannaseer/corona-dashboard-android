@@ -6,7 +6,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical"
         tools:context=".fragments.MapViewFragment">
 
@@ -21,11 +20,9 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapview"
+        <WebView
+            android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:apiKey="@string/google_maps_api_key" />
-
+            android:layout_height="match_parent" />
     </LinearLayout>
 </layout>
