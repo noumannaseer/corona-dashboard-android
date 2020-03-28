@@ -25,5 +25,14 @@
     <string name="total">Total</string>
     <string name="provincial">Provincial</string>
     <string name="no_provincial_stats_available">No provincial stats available</string>
+    <string name="view_detail">View detail</string>
+    <string name="sort_by">Sort by</string>
+    <string name="apply_filter">Apply filter</string>
+    <string name="low"><![CDATA[Low ( <100)]]></string>
+    <string name="meduim"><![CDATA[Medium (<1000)]]></string>
+    <string name="high"><![CDATA[High ( >5000)]]></string>
+    <string name="descending">Descending</string>
+    <string name="ascending">Ascending</string>
+    <string name="all_record">All records</string>
 
 </resources>

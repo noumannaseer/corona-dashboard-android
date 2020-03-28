@@ -26,8 +26,16 @@ public interface CoronaDAO
     @Query("SELECT * FROM corona WHERE id=:id")
     LiveData<Corona> getRecordById(String id);
 
-    @Query("SELECT distinct country from corona")
-    LiveData<List<String>> getCountries();
+    @Query("SELECT  country,sum(quantity) as quantity,latitude,longitude,report_type,id from corona where report_type=0  group by country order by country")
+    LiveData<List<Corona>> getCountriesDeath();
+
+    @Query("SELECT  country,sum(quantity) as quantity,latitude,longitude,report_type,id from corona where report_type=1  group by country order by country")
+    LiveData<List<Corona>> getCountriesConfirmed();
+
+
+    @Query("SELECT  country,sum(quantity) as quantity,latitude,longitude,report_type,id from corona where report_type=2  group by country order by country")
+    LiveData<List<Corona>> getCountriesRecovered();
+
 
     @Query("SELECT sum(quantity) from corona where report_type=:type")
     LiveData<Integer> getSum(int type);

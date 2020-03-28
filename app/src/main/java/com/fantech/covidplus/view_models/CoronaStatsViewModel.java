@@ -41,12 +41,29 @@ public class CoronaStatsViewModel
     }
 
     //*********************************************************************
-    public LiveData<List<String>> getCountriesList()
+    public LiveData<List<Corona>> getCountriesListDeath()
     //*********************************************************************
     {
 
-        return mCoronaDAO.getCountries();
+        return mCoronaDAO.getCountriesDeath();
     }
+
+    //*********************************************************************
+    public LiveData<List<Corona>> getCountriesListRecovered()
+    //*********************************************************************
+    {
+
+        return mCoronaDAO.getCountriesRecovered();
+    }
+
+    //*********************************************************************
+    public LiveData<List<Corona>> getCountriesListConfirmed()
+    //*********************************************************************
+    {
+
+        return mCoronaDAO.getCountriesConfirmed();
+    }
+
 
     //****************************************************************
     public void insert(final Corona corona)

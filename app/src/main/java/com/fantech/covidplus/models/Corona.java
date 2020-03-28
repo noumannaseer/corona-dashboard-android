@@ -7,6 +7,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
+import lombok.Getter;
+import lombok.Setter;
 
 
 //********************************************
@@ -22,10 +24,10 @@ public class Corona
     private String latitude;
     private String longitude;
     private int quantity;
+
     private String state;
     private String country;
-    @TypeConverters({DateConverter.class})
-    private Date date;
+@Getter @Setter private Date date;
 
     //Use Lombok to process and avoid getter setter methods.
     //************************************

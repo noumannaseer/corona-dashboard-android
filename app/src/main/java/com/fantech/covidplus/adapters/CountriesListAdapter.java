@@ -1,10 +1,12 @@
 package com.fantech.covidplus.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.fantech.covidplus.R;
 import com.fantech.covidplus.databinding.ListViewCountriesBinding;
+import com.fantech.covidplus.models.CoronaCountry;
 
 import java.util.List;
 
@@ -18,11 +20,11 @@ public class CountriesListAdapter
         extends RecyclerView.Adapter<CountriesListAdapter.ViewHolder>
 //******************************************************************
 {
-    private List<String> mCountriesList;
+    private List<CoronaCountry> mCountriesList;
     private CountryClickListener mCountryClickListener;
 
     //******************************************************************
-    public CountriesListAdapter(List<String> mCountriesList, CountryClickListener mCountryClickListener)
+    public CountriesListAdapter(List<CoronaCountry> mCountriesList, CountryClickListener mCountryClickListener)
     //******************************************************************
     {
         this.mCountriesList = mCountriesList;
@@ -64,12 +66,37 @@ public class CountriesListAdapter
     //**********************************************
     {
         val item = mCountriesList.get(position);
-        holder.mBinding.country.setText(item);
+        holder.mBinding.country.setText(item.getCountry());
+        holder.mBinding.totalDeaths.setText(String.valueOf(item.getTotalDeath()));
+        holder.mBinding.totalConfirmed.setText(String.valueOf(item.getTotalConfirmed()));
+        holder.mBinding.totalRecovered.setText(String.valueOf(item.getTotalRecovered()));
+
         holder.mBinding.mainView.setOnClickListener(view ->
         {
-            if (mCountryClickListener == null)
+            if (holder.mBinding.up.getVisibility() == View.VISIBLE)
+            {
+                holder.mBinding.up.setVisibility(
+                        View.GONE);
+                holder.mBinding.down.setVisibility(
+                        View.VISIBLE);
+                holder.mBinding.statsLayout.setVisibility(
+                        View.GONE);
+            }
+            else
+            {
+                holder.mBinding.statsLayout.setVisibility(
+                        View.VISIBLE);
+                holder.mBinding.up.setVisibility(
+                        View.VISIBLE);
+                holder.mBinding.down.setVisibility(
+                        View.GONE);
+            }
+        });
+
+        holder.mBinding.viewDetail.setOnClickListener(view->{
+            if(mCountryClickListener==null)
                 return;
-            mCountryClickListener.onCountryClick(item);
+            mCountryClickListener.onCountryClick(item.getCountry());
         });
     }
 
@@ -82,8 +109,9 @@ public class CountriesListAdapter
     }
 
     //**********************************************
-    public class ViewHolder extends RecyclerView.ViewHolder
-    //**********************************************
+    public class ViewHolder
+            extends RecyclerView.ViewHolder
+            //**********************************************
     {
         ListViewCountriesBinding mBinding;
 
@@ -96,9 +124,10 @@ public class CountriesListAdapter
         }
     }
 
+
     //**********************************************
     public interface CountryClickListener
-    //**********************************************
+            //**********************************************
     {
         void onCountryClick(String country);
     }

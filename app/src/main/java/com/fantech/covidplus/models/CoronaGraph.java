@@ -2,18 +2,14 @@ package com.fantech.covidplus.models;
 
 import java.util.Date;
 
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 //**********************************************************
-@Entity(tableName = "Corona")
+//@Entity(tableName = "Corona")
 public class CoronaGraph
 //**********************************************************
 {
     private int quantity;
-    @TypeConverters({DateConverter.class})
     private Date date;
 
     //**********************************************************
