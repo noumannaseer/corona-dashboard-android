@@ -3,10 +3,8 @@ package com.fantech.covidplus.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import lombok.val;
 
@@ -22,21 +20,10 @@ import com.fantech.covidplus.databinding.FragmentMapViewBinding;
 import com.fantech.covidplus.models.Corona;
 import com.fantech.covidplus.models.CoronaCountry;
 import com.fantech.covidplus.models.CoronaMap;
-import com.fantech.covidplus.utils.AndroidUtil;
 import com.fantech.covidplus.utils.Constants;
 import com.fantech.covidplus.utils.ThemeUtils;
 import com.fantech.covidplus.view_models.CoronaStatsViewModel;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MapStyleOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -108,7 +95,9 @@ public class MapViewFragment
 
     }
 
+    //*************************************************
     private void processList()
+    //*************************************************
     {
         if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null)
             return;
@@ -164,10 +153,10 @@ public class MapViewFragment
             for (val country : mCountryList)
             {
                 JSONObject jObject = new JSONObject();
-                jObject.put("country", country.getCountry());
-                jObject.put("deaths", country.getTotalDeath());
-                jObject.put("recovered", country.getTotalRecovered());
-                jObject.put("confirmed", country.getTotalConfirmed());
+                jObject.put(Constants.COUNTRY, country.getCountry());
+                jObject.put(Constants.DEATHS, country.getTotalDeath());
+                jObject.put(Constants.RECOVERED, country.getTotalRecovered());
+                jObject.put(Constants.CONFIRMED, country.getTotalConfirmed());
                 jArray.put(jObject);
             }
 
