@@ -81,7 +81,7 @@ public class SplashActivity
                                    SharedPreferencesUtils.LAST_UPDATED_TIME);
                            long diff = System.currentTimeMillis() - lastUpdated;
                            int numOfDays = (int)(diff / (1000 * 60 * 60 * 24));
-                   if (coronas.size() == 0 || lastUpdated == 0 || numOfDays >= 1)
+                    if (coronas.size() == 0 || lastUpdated == 0 || numOfDays >= 1)
                                loadStats();
                            else
                            {
