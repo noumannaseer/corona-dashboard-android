@@ -25,9 +25,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/flag"
+                    android:layout_width="30dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/flag_abkhazia"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/country"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@android:color/transparent"
@@ -38,9 +47,11 @@
                     android:textColor="?attr/background_text_color"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layout_editor_absoluteX="8dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/flag" />
 
                 <ImageView
+
                     android:id="@+id/up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,12 +59,12 @@
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
                     android:tint="?attr/background_text_color"
-                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/country"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/down"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +79,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/stats_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

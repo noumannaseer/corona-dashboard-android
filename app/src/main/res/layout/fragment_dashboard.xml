@@ -40,22 +40,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@android:color/transparent"
-                        android:elevation="50dp"
-                        android:minHeight="?attr/actionBarSize"
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        app:tabIndicatorColor="?attr/green_color_background"
-                        app:tabIndicatorHeight="2dp"
-                        app:tabPadding="0dp"
-                        app:tabSelectedTextColor="?attr/green_color_background"
-                        app:tabTextAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                        app:tabTextColor="?grey_color_background" />
-
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/line_chart"
                         android:layout_width="match_parent"

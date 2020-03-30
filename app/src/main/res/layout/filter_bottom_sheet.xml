@@ -19,28 +19,83 @@
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/sort_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/accending"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="?attr/grey_color_background"
-                android:checked="true"
-                android:text="@string/ascending"
-                android:textColor="?attr/grey_color_background" />
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/descending"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="?attr/grey_color_background"
-                android:text="@string/descending"
-                android:textColor="?attr/grey_color_background" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+
+                        android:id="@+id/accending"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:buttonTint="?attr/grey_color_background"
+                        android:text="@string/ascending"
+                        android:textColor="?attr/grey_color_background" />
+
+                    <RadioButton
+                        android:id="@+id/descending"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="?attr/grey_color_background"
+                        android:text="@string/descending"
+                        android:textColor="?attr/grey_color_background" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/death_cases"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="?attr/grey_color_background"
+                        android:text="@string/death_cases"
+                        android:textColor="?attr/grey_color_background" />
+
+                    <RadioButton
+                        android:id="@+id/confirmed_cases"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="?attr/grey_color_background"
+                        android:text="@string/confirmed_cases"
+                        android:textColor="?attr/grey_color_background" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/recover_cases"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="?attr/grey_color_background"
+                        android:text="@string/recovered_cases"
+                        android:textColor="?attr/grey_color_background" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </RadioGroup>
 
         <androidx.constraintlayout.widget.ConstraintLayout

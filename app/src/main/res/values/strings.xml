@@ -34,5 +34,15 @@
     <string name="descending">Descending</string>
     <string name="ascending">Ascending</string>
     <string name="all_record">All records</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="faqs">FAQs</string>
+    <string name="death_cases">Death cases</string>
+    <string name="confirmed_cases">Confirmed cases</string>
+    <string name="recovered_cases">Recovered cases</string>
+    <string name="guide_lines">Guidelines</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="fantech_website">fantechlabs.io</string>
 
 </resources>

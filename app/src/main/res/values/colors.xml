@@ -6,7 +6,7 @@
     <color name="background_text_color1">#000000</color>
     <color name="foreground_text_color1">#9CA2A8</color>
     <!--    <color name="green_color_background1">#1C9036</color>-->
-    <color name="green_color_background1">#3AA852</color>
+    <color name="green_color_background1">#00C6EB</color>
 
     <color name="blue_color_background1">#0CA6DC</color>
     <color name="purple_color_background1">#3F4CAB</color>
@@ -22,7 +22,7 @@
     <color name="app_foreground2">#3C4043</color>
     <color name="background_text_color2">#FFFFFF</color>
     <color name="foreground_text_color2">#9CA2A8</color>
-    <color name="green_color_background2">#3AA852</color>
+    <color name="green_color_background2">#00C6EB</color>
     <color name="blue_color_background2">#0CA6DC</color>
     <color name="purple_color_background2">#535EB3</color>
     <color name="yellow_color_background2">#BBCD4E</color>
