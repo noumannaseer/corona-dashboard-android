@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fantech.covidplus">
+    package="com.fantech.novoid">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".Covid"
+        android:name="com.fantech.novoid.Covid"
         android:allowBackup="true"
         android:icon="@mipmap/novoi_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/novoi_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.CountryStatsActivity"></activity>
+        <activity android:name="com.fantech.novoid.activities.CountryStatsActivity"></activity>
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="com.fantech.novoid.activities.HomeActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.fantech.novoid.activities.SplashActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +30,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAjIyfVnSTMZbYxjfwsV-p1GPntl8zV6Kg" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3a90ec7c634f8fe205fe3f61a40eb548f996d7fe" />
     </application>
 
 </manifest>

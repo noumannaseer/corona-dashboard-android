@@ -18,6 +18,9 @@
     <item
         android:id="@+id/stay_safe"
         android:icon="@drawable/stay_safe"
-        android:title="@string/stay_safe" />
-
+        android:title="@string/guide_lines" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings" />
 </menu>

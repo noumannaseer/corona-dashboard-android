@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "490257318704",
+    "firebase_url": "https://novoid-606b0.firebaseio.com",
+    "project_id": "novoid-606b0",
+    "storage_bucket": "novoid-606b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490257318704:android:c3cf55b32c4f205b06fef5",
+        "android_client_info": {
+          "package_name": "com.fantech.novoid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490257318704-rrlimdb557hac2tckr2aa86jlqcsvu7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa4c1l1bd8V8xH5b-09BeLqWTHYT-Sgoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490257318704-rrlimdb557hac2tckr2aa86jlqcsvu7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
