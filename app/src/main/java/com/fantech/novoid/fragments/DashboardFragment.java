@@ -12,8 +12,6 @@ import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -37,9 +35,6 @@ public class DashboardFragment
     private View rootView;
     private FragmentDashboardBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
-    ArrayList<Entry> x;
-    ArrayList<String> y;
-    private LineChart mChart;
     //***********************************************************************
     public void onCreate(Bundle savedInstanceState)
     //***********************************************************************
@@ -67,7 +62,6 @@ public class DashboardFragment
     private void initControls()
     //**********************************************
     {
-        mChart = mBinding.lineChart;
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
         mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH)

@@ -45,11 +45,7 @@
                         app:tabSelectedTextColor="?attr/green_color_background"
                         app:tabTextAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                         app:tabTextColor="?grey_color_background" />
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/line_chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:visibility="gone" />
+
 
                     <lecho.lib.hellocharts.view.LineChartView
                         android:id="@+id/chart"
