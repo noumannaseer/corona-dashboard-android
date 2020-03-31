@@ -63,7 +63,7 @@ public interface CoronaDAO
     LiveData<List<String>> getProvinceList(String countryName);
 
     // Select one task from Task table by id
-    @Query("SELECT date,sum(quantity) as quantity FROM corona WHERE date between :startDate AND :endDate GROUP BY date")
-    LiveData<List<CoronaGraph>> getLast30DaysRecord(Date startDate, Date endDate);
+    @Query("SELECT date,sum(quantity) as quantity FROM corona WHERE date between :startDate AND :endDate and report_type=:reportType GROUP BY date ")
+    LiveData<List<CoronaGraph>> getLast30DaysRecord(Date startDate, Date endDate, int reportType);
 
 }

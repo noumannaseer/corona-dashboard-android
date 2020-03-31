@@ -3,9 +3,12 @@ package com.fantech.novoid.activities;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.blongho.country_data.World;
 import com.fantech.novoid.R;
 import com.fantech.novoid.adapters.CustomFragmentPageAdapter;
 import com.fantech.novoid.databinding.ActivityCountryStatsBinding;
+import com.fantech.novoid.utils.Constants;
+import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
 import com.google.android.material.tabs.TabLayout;
 
@@ -13,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import lombok.val;
 
 //*******************************************************
 public class CountryStatsActivity
@@ -46,6 +50,13 @@ public class CountryStatsActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getParcelable();
         addTabs();
+        val identifierName = Constants.FLAG_PREFIX + mCountryName
+                .toLowerCase()
+                .replace(" ", "_");
+        UIUtils.setDrawable(identifierName,mBinding.flag,this);
+        World.init(this);
+        final int flag = World.getFlagOf(mCountryName.toLowerCase());
+        mBinding.flag.setImageResource(flag);
         mBinding.countryName.setText(mCountryName);
     }
 
@@ -68,27 +79,27 @@ public class CountryStatsActivity
     //**********************************************
     {
         mCoronaStatsViewModel.getProvinceList(mCountryName)
-                             .observe(this,
-                                      coronas -> {
-          mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
-                                                      .setText(
-                                                              getString(
-                                                                      R.string.total)));
-          int pageCount = 1;
-          if (coronas.size() > 0 && !TextUtils.isEmpty(
-                  coronas.get(0)))
-          {
-              mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
-                                                          .setText(
-                                                                  getString(
-                                                                          R.string.provincial)));
-              pageCount = 2;
-          }
-          attachViewPageAdaptor(pageCount);
+         .observe(this,
+                  coronas -> {
+                      mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
+                                                                  .setText(
+                                                                          getString(
+                                                                                  R.string.total)));
+                      int pageCount = 1;
+                      if (coronas.size() > 0 && !TextUtils.isEmpty(
+                              coronas.get(0)))
+                      {
+                          mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
+                                                                      .setText(
+                                                                              getString(
+                                                                                      R.string.provincial)));
+                          pageCount = 2;
+                      }
+                      attachViewPageAdaptor(pageCount);
 
-          mBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                      mBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-      });
+                  });
 
     }
 

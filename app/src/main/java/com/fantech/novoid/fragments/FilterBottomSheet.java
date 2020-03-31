@@ -67,18 +67,23 @@ public class FilterBottomSheet
         {
         case ASCENDING:
             mBinding.accending.setChecked(true);
+            mBinding.sortType.setTag((int)R.id.accending);
             break;
         case DESCENDING:
             mBinding.descending.setChecked(true);
+            mBinding.sortType.setTag((int)R.id.descending);
             break;
         case DEATH_CASES:
             mBinding.deathCases.setChecked(true);
+            mBinding.sortType.setTag((int)R.id.death_cases);
             break;
         case CONFIRMED_CASES:
             mBinding.confirmedCases.setChecked(true);
+            mBinding.sortType.setTag((int)R.id.confirmed_cases);
             break;
         case RECOVERED_CASES:
             mBinding.recoverCases.setChecked(true);
+            mBinding.sortType.setTag((int)R.id.recover_cases);
             break;
         }
         UIUtils.setRadioExclusiveClick(mBinding.sortType);

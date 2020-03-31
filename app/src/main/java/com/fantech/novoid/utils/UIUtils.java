@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -797,6 +798,24 @@ public class UIUtils
         return date;
     }
 
+    //*************************************************************
+    public static void setDrawable(String identifierName, ImageView imageView,Context context)
+    //*************************************************************
+    {
+        val drawableId = AndroidUtil.getResources()
+                                    .getIdentifier(identifierName
+                                            , Constants.DRAWABLE,context
+                                                              .getPackageName());
+        try
+        {
+            imageView.setImageDrawable(AndroidUtil.getDrawable(drawableId));
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
 
     //*********************************************************************
     public static void startSmsIntent(@NonNull String body, @NonNull String number, Context context)

@@ -32,4 +32,13 @@
     <color name="grey_color_background2">#7E8689</color>
     <color name="transparent_red">#50EE0000</color>
 
+
+    <color name="no_infections">#F2F2F2</color>
+    <color name="level_1">#A9E3F9</color>
+    <color name="level_2">#53BDF1</color>
+    <color name="level_3">#079DF4</color>
+    <color name="level_4">#025CFA</color>
+
+    <color name="graph_color">#03A9F4</color>
+
 </resources>
