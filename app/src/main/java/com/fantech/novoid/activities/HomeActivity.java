@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ActivityHomeBinding;
 import com.fantech.novoid.fragments.BlogFragment;
