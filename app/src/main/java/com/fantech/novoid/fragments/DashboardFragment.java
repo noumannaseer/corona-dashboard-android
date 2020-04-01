@@ -1,11 +1,14 @@
 package com.fantech.novoid.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fantech.novoid.R;
+import com.fantech.novoid.databinding.ChartDetailDialogBinding;
 import com.fantech.novoid.databinding.FragmentDashboardBinding;
 import com.fantech.novoid.models.CoronaGraph;
 import com.fantech.novoid.utils.AndroidUtil;
@@ -17,9 +20,13 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
+import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -93,8 +100,11 @@ public class DashboardFragment
                   });
 
         showGraph(Constants.REPORT_DEATH);
-        addTabs();
-        mBinding.lastUpdated.setText(UIUtils.getPostedTime(SharedPreferencesUtils.getLong(SharedPreferencesUtils.LAST_UPDATED_TIME)));
+        addMapTabs();
+        val updatedTime = SharedPreferencesUtils.getLong(SharedPreferencesUtils.LAST_UPDATED_TIME);
+        mBinding.lastUpdated.setText(AndroidUtil.getString(R.string.updated_at_template,
+                                                           UIUtils.getDate(updatedTime,
+                                                                           "MMM dd, yyyy hh:mm a z")));
 
     }
 
@@ -114,7 +124,7 @@ public class DashboardFragment
     }
 
     //**********************************************
-    private void addTabs()
+    private void addMapTabs()
     //**********************************************
     {
         mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
@@ -132,6 +142,43 @@ public class DashboardFragment
             public void onTabSelected(TabLayout.Tab tab)
             {
                 showGraph(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab)
+            {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab)
+            {
+
+            }
+        });
+    }
+
+    //**********************************************
+    private void addMainTabs()
+    //**********************************************
+    {
+        mBinding.countryWorldWide.addTab(mBinding.countryWorldWide.newTab()
+                                                                  .setText(
+                                                                          getString(
+                                                                                  R.string.total_death)));
+        mBinding.countryWorldWide.addTab(mBinding.countryWorldWide.newTab()
+                                                                  .setText(getString(
+                                                                          R.string.total_confirmed)));
+        mBinding.countryWorldWide.addTab(mBinding.countryWorldWide.newTab()
+                                                                  .setText(getString(
+                                                                          R.string.total_recorved)));
+
+        mBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+        {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab)
+            {
             }
 
             @Override
@@ -188,6 +235,8 @@ public class DashboardFragment
         data.setAxisXBottom(axis);
         axis.setHasTiltedLabels(true);
         axis.setMaxLabelChars(8);
+
+
         Axis yAxis = new Axis();
         if (reportType == Constants.REPORT_DEATH)
             yAxis.setName(AndroidUtil.getString(R.string.total_death_in_k));
@@ -196,15 +245,65 @@ public class DashboardFragment
         else if (reportType == Constants.REPORT_RECOVERED)
             yAxis.setName(AndroidUtil.getString(R.string.total_recovered_in_k));
 
+
+
+        SimpleAxisValueFormatter formatter = new SimpleAxisValueFormatter();
+        formatter.setAppendedText(new char[] { 'k' });//text added after value, for example $1.99k
+
+        yAxis.setFormatter(formatter);
         yAxis.setTextColor(AndroidUtil.getColor(R.color.graph_color));
         yAxis.setTextSize(10);
+        yAxis.setHasTiltedLabels(true);
         data.setAxisYLeft(yAxis);
+
+
+
+        mBinding.chart.setHorizontalScrollBarEnabled(true);
+        mBinding.chart.setVerticalScrollBarEnabled(true);
+
 
         mBinding.chart.setLineChartData(data);
         mBinding.chart.animate();
         Viewport viewport = new Viewport(mBinding.chart.getMaximumViewport());
         viewport.top = max;
+        viewport.bottom=0;
+        mBinding.chart.setOnValueTouchListener(new LineChartOnValueSelectListener()
+        {
+            @Override
+            public void onValueSelected(int lineIndex, int pointIndex, PointValue value)
+            {
+                int a=10;
+                showDetail(coronaGraphs.get(pointIndex).getDate(),coronaGraphs.get(pointIndex).getQuantity());
+
+            }
+
+            @Override
+            public void onValueDeselected()
+            {
+
+            }
+        });
+
+        mBinding.chart.setZoomEnabled(false);
         mBinding.chart.setMaximumViewport(viewport);
+
+
+    }
+
+    //*****************************************************************************
+    private void showDetail(Date date, int quantity)
+    //*****************************************************************************
+    {
+
+        final Dialog dialog = new Dialog(getActivity());
+        ChartDetailDialogBinding chartDetail = DataBindingUtil.inflate(
+                LayoutInflater.from(getActivity()), R.layout.chart_detail_dialog, null, false);
+        dialog.setContentView(chartDetail.getRoot());
+
+        chartDetail.stat.setText(UIUtils.getFormattedAmount(quantity));
+        chartDetail.date.setText(UIUtils.getDate(date.getTime(),"MMM dd, yyyy"));
+
+        dialog.show();
 
     }
 

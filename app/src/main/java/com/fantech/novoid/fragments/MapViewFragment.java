@@ -272,9 +272,7 @@ public class MapViewFragment
                 public void run()
                 //*****************************************************
                 {
-                    int isDark = 0;
-                    if (ThemeUtils.getCurrentThemeIsDark())
-                        isDark = 1;
+                    int isDark = ThemeUtils.getCurrentThemeIsDark()?1:0;
                     mWebView.loadUrl("javascript:setJson(" + jArray + "," + isDark + ")");
                 }
             });

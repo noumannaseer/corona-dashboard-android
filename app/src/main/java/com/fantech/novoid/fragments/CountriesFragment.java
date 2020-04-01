@@ -42,6 +42,8 @@ public class CountriesFragment
     private List<Corona> mRecoveredStats;
     private List<Corona> mConfirmedStats;
     private SortingType mSortingType = SortingType.getSortType(R.id.confirmed_cases);
+    private CountriesListAdapter mCountriesListAdapter;
+    private List<CoronaCountry> mFilteredList;
 
 
     //***********************************************************************
@@ -66,23 +68,23 @@ public class CountriesFragment
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
         mCoronaStatsViewModel.getCountriesListDeath()
-         .observe(this, strings ->
-         {
-             mDeathStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mDeathStats = strings;
+                                 processList();
+                             });
         mCoronaStatsViewModel.getCountriesListRecovered()
-         .observe(this, strings ->
-         {
-             mRecoveredStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mRecoveredStats = strings;
+                                 processList();
+                             });
         mCoronaStatsViewModel.getCountriesListConfirmed()
-         .observe(this, strings ->
-         {
-             mConfirmedStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mConfirmedStats = strings;
+                                 processList();
+                             });
 
         attachTextChangeListener();
         mBinding.filter.setOnClickListener(view -> showFilter());
@@ -109,7 +111,8 @@ public class CountriesFragment
     private void processList()
     //*************************************************************
     {
-        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null)
+        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null ||
+        mRecoveredStats.size()==0|| mConfirmedStats.size()==0 || mDeathStats.size()==0)
             return;
         mCountriesList = new ArrayList<>();
         for (int i = 0; i < mRecoveredStats.size(); i++)
@@ -117,7 +120,6 @@ public class CountriesFragment
             val recovered = mRecoveredStats.get(i);
             val death = mDeathStats.get(i);
             val confirmed = mConfirmedStats.get(i);
-
             mCountriesList.add(new CoronaCountry(recovered.getLatitude(),
                                                  recovered.getLongitude(),
                                                  recovered.getCountry(),
@@ -125,9 +127,10 @@ public class CountriesFragment
                                                  recovered.getQuantity(),
                                                  confirmed.getQuantity()));
         }
-        mConfirmedStats=null;
-        mDeathStats=null;
-        mRecoveredStats=null;
+        mConfirmedStats = null;
+        mDeathStats = null;
+        mRecoveredStats = null;
+        mFilteredList=new ArrayList<>();
         showCountriesOnRecyclerView(mCountriesList);
     }
 
@@ -185,32 +188,25 @@ public class CountriesFragment
     private void showCountriesOnRecyclerView(List<CoronaCountry> countriesList)
     //***********************************************************************
     {
-        switch (mSortingType)
+        applySorting(countriesList);
+        mFilteredList.clear();;
+        mFilteredList.addAll(countriesList);
+
+        if (mCountriesListAdapter == null)
         {
-        case RECOVERED_CASES:
-            sortByRecoveredCases(countriesList);
-            break;
-        case CONFIRMED_CASES:
-            sortByConfirmedCases(countriesList);
-            break;
-        case DEATH_CASES:
-            sortByDeathCases(countriesList);
-            break;
-        case ASCENDING:
-            sortByAscending(countriesList);
-            break;
-        case DESCENDING:
-            sortByDescending(countriesList);
+
+            mCountriesListAdapter = new CountriesListAdapter(mFilteredList, this);
+            mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            mBinding.recyclerView.setAdapter(mCountriesListAdapter);
+        return;
         }
+        mCountriesListAdapter.notifyDataSetChanged();
 
-        CountriesListAdapter countriesListAdapter = new CountriesListAdapter(countriesList, this);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mBinding.recyclerView.setAdapter(countriesListAdapter);
-        hideLoadingDialog();
     }
 
+
     //***********************************************************************
-    private void sortByDescending(List<CoronaCountry> countriesList)
+    private void applySorting(List<CoronaCountry> countriesList)
     //***********************************************************************
     {
         Collections.sort(countriesList, new Comparator<CoronaCountry>()
@@ -218,8 +214,23 @@ public class CountriesFragment
             @Override
             public int compare(CoronaCountry o1, CoronaCountry o2)
             {
-                return o2.getCountry()
-                         .compareTo(o1.getCountry());
+                switch (mSortingType)
+                {
+                case RECOVERED_CASES:
+                    return o2.getTotalRecovered() - o1.getTotalRecovered();
+                case CONFIRMED_CASES:
+                    return o2.getTotalConfirmed() - o1.getTotalConfirmed();
+                case DEATH_CASES:
+                    return o2.getTotalDeath() - o1.getTotalDeath();
+                case ASCENDING:
+                    return o1.getCountry()
+                             .compareTo(o2.getCountry());
+                case DESCENDING:
+                    return o2.getCountry()
+                             .compareTo(o1.getCountry());
+                default:
+                    return 0;
+                }
             }
 
             @Override
@@ -231,89 +242,6 @@ public class CountriesFragment
 
     }
 
-    private void sortByAscending(List<CoronaCountry> countriesList)
-    {
-        Collections.sort(countriesList, new Comparator<CoronaCountry>()
-        {
-            @Override
-            public int compare(CoronaCountry o1, CoronaCountry o2)
-            {
-                return o1.getCountry()
-                         .compareTo(o2.getCountry());
-            }
-
-            @Override
-            public boolean equals(Object obj)
-            {
-                return false;
-            }
-        });
-
-    }
-
-    //***********************************************************************
-    private void sortByDeathCases(List<CoronaCountry> countriesList)
-    //***********************************************************************
-    {
-        Collections.sort(countriesList, new Comparator<CoronaCountry>()
-        {
-            @Override
-            public int compare(CoronaCountry o1, CoronaCountry o2)
-            {
-                return o2.getTotalDeath() - o1.getTotalDeath();
-
-            }
-
-            @Override
-            public boolean equals(Object obj)
-            {
-                return false;
-            }
-        });
-
-    }
-
-    //***********************************************************************
-    private void sortByConfirmedCases(List<CoronaCountry> countriesList)
-    //***********************************************************************
-    {
-        Collections.sort(countriesList, new Comparator<CoronaCountry>()
-        {
-            @Override
-            public int compare(CoronaCountry o1, CoronaCountry o2)
-            {
-                return o2.getTotalConfirmed() - o1.getTotalConfirmed();
-
-            }
-
-            @Override
-            public boolean equals(Object obj)
-            {
-                return false;
-            }
-        });
-    }
-
-    //***********************************************************************
-    private void sortByRecoveredCases(List<CoronaCountry> countriesList)
-    //***********************************************************************
-    {
-        Collections.sort(countriesList, new Comparator<CoronaCountry>()
-        {
-            @Override
-            public int compare(CoronaCountry o1, CoronaCountry o2)
-            {
-                return o2.getTotalRecovered() - o1.getTotalRecovered();
-
-            }
-
-            @Override
-            public boolean equals(Object obj)
-            {
-                return false;
-            }
-        });
-    }
 
     //***********************************************************************
     @Override
