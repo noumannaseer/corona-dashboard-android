@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/app_background"
-        android:padding="10dp"
         tools:context=".fragments.CountriesFragment">
 
         <LinearLayout
@@ -16,64 +15,64 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-            <TextView
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/countries"
-                android:textAlignment="center"
-                android:textColor="?background_text_color"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="20dp"
-                app:cardBackgroundColor="?attr/app_foreground"
-                app:cardCornerRadius="20dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="?attr/app_foreground"
+                    app:cardCornerRadius="20dp">
 
-                    <EditText
-                        android:id="@+id/country"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/ic_search_black_24dp"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="?attr/grey_color_background"
-                        android:hint="@string/search_country"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:textColor="?attr/background_text_color"
-                        android:textColorHint="?attr/grey_color_background"
-                        android:textSize="16sp" />
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:padding="3dp"
-                        android:id="@+id/filter"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_filter_list_black_24dp"
-                        android:tint="?attr/grey_color_background"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <EditText
+                            android:id="@+id/country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:drawableStart="@drawable/ic_search_black_24dp"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="?attr/grey_color_background"
+                            android:hint="@string/search_country"
+                            android:padding="10dp"
+                            android:singleLine="true"
+                            android:textColor="?attr/background_text_color"
+                            android:textColorHint="?attr/grey_color_background"
+                            android:textSize="16sp" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/filter"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_filter_list_black_24dp"
+                            android:tint="?attr/grey_color_background"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

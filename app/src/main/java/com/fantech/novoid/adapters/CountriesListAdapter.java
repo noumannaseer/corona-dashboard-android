@@ -1,14 +1,13 @@
 package com.fantech.novoid.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
+import com.blongho.country_data.World;
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ListViewCountriesBinding;
 import com.fantech.novoid.models.CoronaCountry;
-import com.fantech.novoid.utils.AndroidUtil;
-import com.fantech.novoid.utils.Constants;
+import com.fantech.novoid.utils.ImageLoader;
 import com.fantech.novoid.utils.UIUtils;
 
 import java.util.List;
@@ -25,6 +24,7 @@ public class CountriesListAdapter
 {
     private List<CoronaCountry> mCountriesList;
     private CountryClickListener mCountryClickListener;
+    private ImageLoader mImageLoader;
 
     //******************************************************************
     public CountriesListAdapter(List<CoronaCountry> mCountriesList, CountryClickListener mCountryClickListener)
@@ -60,6 +60,7 @@ public class CountriesListAdapter
                 LayoutInflater.from(parent.getContext()), R.layout.list_view_countries, parent,
                 false);
         ViewHolder holder = new ViewHolder(mBinding);
+        mImageLoader=new ImageLoader(parent.getContext());
         return holder;
     }
 
@@ -77,46 +78,17 @@ public class CountriesListAdapter
                 UIUtils.getFormattedAmount(item.getTotalRecovered()));
         holder.mBinding.mainView.setOnClickListener(view ->
         {
-            if (holder.mBinding.up.getVisibility() == View.VISIBLE)
-            {
-                holder.mBinding.up.setVisibility(
-                        View.GONE);
-                holder.mBinding.down.setVisibility(
-                        View.VISIBLE);
-                holder.mBinding.statsLayout.setVisibility(
-                        View.GONE);
-            }
-            else
-            {
-                holder.mBinding.statsLayout.setVisibility(
-                        View.VISIBLE);
-                holder.mBinding.up.setVisibility(
-                        View.VISIBLE);
-                holder.mBinding.down.setVisibility(
-                        View.GONE);
-            }
-        });
-
-        holder.mBinding.viewDetail.setOnClickListener(view -> {
             if (mCountryClickListener == null)
                 return;
-            mCountryClickListener.onCountryClick(item.getCountry());
+            mCountryClickListener.onCountryClick(
+                    item.getCountry());
         });
-        val identifierName = Constants.FLAG_PREFIX + item.getCountry()
-                                                         .toLowerCase()
-                                                         .replace(" ", "_");
-        val drawableId = AndroidUtil.getResources()
-                                    .getIdentifier(identifierName
-                                            , Constants.DRAWABLE, holder.itemView.getContext()
-                                                                                 .getPackageName());
-        try
-        {
-            holder.mBinding.flag.setImageDrawable(AndroidUtil.getDrawable(drawableId));
-        }
-        catch (Exception e)
-        {
 
-        }
+        World.init(holder.itemView.getContext());
+        final int flag = World.getFlagOf(item.getCountry().toLowerCase());
+       holder.mBinding.flag.setImageResource(flag);
+
+
     }
 
     //**********************************************

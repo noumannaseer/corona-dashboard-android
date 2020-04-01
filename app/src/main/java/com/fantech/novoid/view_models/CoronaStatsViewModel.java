@@ -144,12 +144,12 @@ public class CoronaStatsViewModel
     }
 
     //*********************************************************************
-    public LiveData<List<CoronaGraph>> getLast30DaysRecord(Date currentDate)
+    public LiveData<List<CoronaGraph>> getLast30DaysRecord(Date currentDate,int reportType)
     //*********************************************************************
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(currentDate.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, -30);
-        return mCoronaDAO.getLast30DaysRecord(calendar.getTime(), currentDate);
+        return mCoronaDAO.getLast30DaysRecord(calendar.getTime(), currentDate,reportType);
     }
 }

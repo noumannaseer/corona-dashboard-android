@@ -41,7 +41,7 @@ public class CountriesFragment
     private List<Corona> mDeathStats;
     private List<Corona> mRecoveredStats;
     private List<Corona> mConfirmedStats;
-    private SortingType mSortingType = SortingType.getSortType(R.id.accending);
+    private SortingType mSortingType = SortingType.getSortType(R.id.confirmed_cases);
 
 
     //***********************************************************************
@@ -125,6 +125,9 @@ public class CountriesFragment
                                                  recovered.getQuantity(),
                                                  confirmed.getQuantity()));
         }
+        mConfirmedStats=null;
+        mDeathStats=null;
+        mRecoveredStats=null;
         showCountriesOnRecyclerView(mCountriesList);
     }
 

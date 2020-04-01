@@ -6,19 +6,22 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.fantech.novoid.Covid"
+        android:name=".Covid"
         android:allowBackup="true"
         android:icon="@mipmap/novoi_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/novoi_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.fantech.novoid.activities.CountryStatsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.AboutActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.CountryStatsActivity"  android:screenOrientation="portrait"/>
         <activity
-            android:name="com.fantech.novoid.activities.HomeActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
+            android:name=".activities.HomeActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" android:screenOrientation="portrait"/>
         <activity
-            android:name="com.fantech.novoid.activities.SplashActivity"
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

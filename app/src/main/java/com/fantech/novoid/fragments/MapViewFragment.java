@@ -3,6 +3,7 @@ package com.fantech.novoid.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -13,13 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import com.fantech.novoid.R;
 import com.fantech.novoid.activities.CountryStatsActivity;
 import com.fantech.novoid.databinding.FragmentMapViewBinding;
+import com.fantech.novoid.interfaces.ConnectionChangeCallback;
 import com.fantech.novoid.models.Corona;
 import com.fantech.novoid.models.CoronaCountry;
 import com.fantech.novoid.models.CoronaMap;
+import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.ThemeUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
@@ -35,6 +40,8 @@ import java.util.List;
 //*****************************************************
 public class MapViewFragment
         extends BaseFragment
+        implements ConnectionChangeCallback
+
 //*****************************************************
 {
     private View rootView;
@@ -42,11 +49,13 @@ public class MapViewFragment
     private CoronaStatsViewModel mCoronaStatsViewModel;
     private GoogleMap mGoogleMap;
     private List<CoronaMap> mMapData;
-    WebView view;
     private List<CoronaCountry> mCountriesList;
     private List<Corona> mDeathStats;
     private List<Corona> mRecoveredStats;
     private List<Corona> mConfirmedStats;
+    private WebView mWebView;
+    private View mProgressView;
+    private ImageView mNoInternetImage;
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -72,26 +81,66 @@ public class MapViewFragment
     {
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
-
-        view = rootView.findViewById(R.id.webview);
+        mWebView = rootView.findViewById(R.id.web_view);
+        mProgressView = rootView.findViewById(R.id.progress_view);
+        mNoInternetImage = rootView.findViewById(R.id.no_internet);
         mCoronaStatsViewModel.getCountriesListDeath()
-         .observe(this, strings ->
-         {
-             mDeathStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mDeathStats = strings;
+                                 processList();
+                             });
         mCoronaStatsViewModel.getCountriesListRecovered()
-         .observe(this, strings ->
-         {
-             mRecoveredStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mRecoveredStats = strings;
+                                 processList();
+                             });
         mCoronaStatsViewModel.getCountriesListConfirmed()
-         .observe(this, strings ->
-         {
-             mConfirmedStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mConfirmedStats = strings;
+                                 processList();
+                             });
+
+        mWebView.setWebViewClient(new WebViewClient()
+        {
+
+            //**********************************************************************
+            @Override
+            public void onPageFinished(WebView view, String url)
+            //**********************************************************************
+            {
+                mBinding.mapLine.setVisibility(View.VISIBLE);
+                super.onPageFinished(view, url);
+                switchVisibility(true);
+            }
+
+            //**********************************************************************
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            //**********************************************************************
+            {
+                super.onPageStarted(view, url, favicon);
+                switchVisibility(false);
+            }
+        });
+        mWebView.getSettings()
+                .setJavaScriptEnabled(true);
+        mWebView.getSettings()
+                .setDomStorageEnabled(true);
+        mWebView.getSettings()
+                .setDatabaseEnabled(true);
+        mWebView.getSettings()
+                .setMinimumFontSize(1);
+        mWebView.getSettings()
+                .setMinimumLogicalFontSize(1);
+        mWebView.getSettings()
+                .setJavaScriptEnabled(true);
+        mWebView.getSettings()
+                .setJavaScriptEnabled(true);
+        mWebView.getSettings()
+                .setUseWideViewPort(true);
 
     }
 
@@ -99,8 +148,11 @@ public class MapViewFragment
     private void processList()
     //*************************************************
     {
-        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null)
+        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null ||
+                mRecoveredStats.size()==0 || mConfirmedStats.size()==0 || mDeathStats.size()==0
+        )
             return;
+
         mCountriesList = new ArrayList<>();
         for (int i = 0; i < mRecoveredStats.size(); i++)
         {
@@ -115,13 +167,64 @@ public class MapViewFragment
                                                  recovered.getQuantity(),
                                                  confirmed.getQuantity()));
         }
+        mRecoveredStats=null;
+        mDeathStats=null;
+        mConfirmedStats=null;
 
-        view.getSettings()
-            .setJavaScriptEnabled(true);
-        view.addJavascriptInterface(new JavaScriptInterface(getContext(), mCountriesList),
-                                    "AndroidNativeCode");
+        mWebView.getSettings()
+                .setJavaScriptEnabled(true);
+        mWebView.addJavascriptInterface(new JavaScriptInterface(getContext(), mCountriesList),
+                                        "AndroidNativeCode");
 
-        view.loadUrl("file:///android_asset/index.html");
+        mWebView.loadUrl("file:///android_asset/index.html");
+    }
+
+    @Override
+    public void onConnectionChanged(boolean isConnected)
+    {
+
+        if (!isConnected)
+        {
+            mWebView.setVisibility(View.GONE);
+            mProgressView.setVisibility(View.GONE);
+            mNoInternetImage.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mWebView.setVisibility(View.GONE);
+            mWebView.reload();
+            mProgressView.setVisibility(View.VISIBLE);
+            mNoInternetImage.setVisibility(View.GONE);
+        }
+    }
+
+    //**********************************************************************
+    private void switchVisibility(boolean pageLoaded)
+    //**********************************************************************
+    {
+
+        if (AndroidUtil.isNetworkStatusAvailable())
+        {
+            if (pageLoaded)
+            {
+                mWebView.setVisibility(View.VISIBLE);
+                mProgressView.setVisibility(View.GONE);
+                mNoInternetImage.setVisibility(View.GONE);
+            }
+            else
+            {
+                mWebView.setVisibility(View.GONE);
+                mProgressView.setVisibility(View.VISIBLE);
+                mNoInternetImage.setVisibility(View.GONE);
+            }
+
+        }
+        else
+        {
+            mWebView.setVisibility(View.GONE);
+            mProgressView.setVisibility(View.GONE);
+            mNoInternetImage.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -172,7 +275,7 @@ public class MapViewFragment
                     int isDark = 0;
                     if (ThemeUtils.getCurrentThemeIsDark())
                         isDark = 1;
-                    view.loadUrl("javascript:setJson(" + jArray + "," + isDark + ")");
+                    mWebView.loadUrl("javascript:setJson(" + jArray + "," + isDark + ")");
                 }
             });
 

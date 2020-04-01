@@ -40,7 +40,6 @@ public class BlogFragment
     private View rootView;
     private FragmentBlogBinding mBinding;
 
-
     //*************************************************************************
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

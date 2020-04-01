@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/app_background"
-        android:orientation="vertical"
-        tools:context=".fragments.SettingsFragment">
+        tools:context=".activities.SettingsActivity">
 
         <LinearLayout
 
@@ -28,7 +27,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/transparent">
+                    android:background="@android:color/transparent"
+                    app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
 
                     <TextView
 
@@ -143,8 +143,7 @@
                     android:background="?attr/green_color_background" />
 
 
-
             </LinearLayout>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>

@@ -81,11 +81,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:textColor="?attr/grey_color_background"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/total_confirmed"
                         android:textAlignment="center"
-                        android:textAllCaps="true"
                         android:textSize="10sp" />
 
                     <TextView
@@ -112,11 +113,11 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:textColor="?attr/grey_color_background"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/total_death"
                         android:textAlignment="center"
-                        android:textAllCaps="true"
                         android:textSize="10sp" />
 
                     <TextView
@@ -143,6 +144,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:textColor="?attr/grey_color_background"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/total_recorved"

@@ -11,16 +11,15 @@ import com.fantech.novoid.databinding.FragmentCountryStatsBinding;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.ThemeUtils;
+import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.lifecycle.ViewModelProviders;
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.model.SliceValue;
 import lombok.val;
 
 //*********************************************************
@@ -74,7 +73,7 @@ public class CountryStatsFragment
                                 mTotalRecovered,
                                 mTotalConfirmed);
               mBinding.totalDeaths.setText(
-                      String.valueOf(mTotalDeaths));
+                      UIUtils.getFormattedAmount(mTotalDeaths));
 
           });
         mCoronaStatsViewModel.countSum(Constants.REPORT_RECOVERED, mCountryName)
@@ -86,8 +85,7 @@ public class CountryStatsFragment
               setPieChartValues(mTotalDeaths,
                                 mTotalRecovered,
                                 mTotalConfirmed);
-              mBinding.totalRecovered.setText(
-                      String.valueOf(mTotalRecovered));
+              mBinding.totalRecovered.setText(UIUtils.getFormattedAmount(mTotalRecovered));
           });
         mCoronaStatsViewModel.countSum(Constants.REPORT_CONFIRMED, mCountryName)
                              .observe(this,
@@ -99,7 +97,7 @@ public class CountryStatsFragment
               setPieChartValues(mTotalDeaths,
                                 mTotalRecovered,
                                 mTotalConfirmed);
-              mBinding.totalConfirmed.setText(String.valueOf(
+              mBinding.totalConfirmed.setText(UIUtils.getFormattedAmount(
                       mTotalConfirmed));
           });
 
@@ -109,65 +107,17 @@ public class CountryStatsFragment
     private void setPieChartValues(Integer totalDeath, Integer totalRecovered, Integer totalConfirmed)
     //************************************************************
     {
-        ArrayList noOfRecord = new ArrayList();
-
         if (totalDeath == 0 && totalRecovered == 0 && totalConfirmed == 0)
         {
             return;
         }
+        List< SliceValue > pieData = new ArrayList<>();
+        pieData.add(new SliceValue(totalDeath,AndroidUtil.getColor(R.color.red_color_background1 )));
+        pieData.add(new SliceValue(totalRecovered, AndroidUtil.getColor(R.color.yellow_color_background1)));
+        pieData.add(new SliceValue(totalConfirmed, AndroidUtil.getColor(R.color.graph_color)));
 
-        noOfRecord.add(new PieEntry(totalDeath, AndroidUtil.getString(R.string.total_death)));
-        noOfRecord.add(new PieEntry(totalRecovered, AndroidUtil.getString(R.string.total_recorved)));
-        noOfRecord.add(new PieEntry(totalConfirmed, AndroidUtil.getString(R.string.total_confirmed)));
-        PieDataSet dataSet = new PieDataSet(noOfRecord, "");
-        dataSet.setDrawValues(false);
-        dataSet.setValueLinePart1OffsetPercentage(90.f);
-        dataSet.setValueLinePart1Length(.10f);
-        dataSet.setValueLinePart2Length(.50f);
-        PieData data = new PieData();
-        data.setDataSet(new PieDataSet(noOfRecord, ""));
-        dataSet.setValueLinePart1OffsetPercentage(90.f);
-        dataSet.setValueLinePart1Length(.10f);
-        dataSet.setValueLinePart2Length(.50f);
-        IPieDataSet a;
-        mBinding.chart1.setData(data);
-        val colors = new ArrayList<Integer>();
-        colors.add(AndroidUtil.getColor(R.color.red_color_background1));
-        colors.add(AndroidUtil.getColor(R.color.green_color_background1));
-        colors.add(AndroidUtil.getColor(R.color.blue_color_background1));
-
-        val ds1 = new PieDataSet(noOfRecord, "");
-        ds1.setColors(colors);
-        ds1.setSliceSpace(2f);
-        ds1.setValueTextColor(Color.WHITE);
-        ds1.setValueTextSize(12f);
-        mBinding.chart1.setData(new PieData(ds1));
-        ds1.setSliceSpace(0);
-        dataSet.setColors(colors);
-        mBinding.chart1.animateXY(1500, 1500);
-        mBinding.chart1.setHoleRadius(20);
-        mBinding.chart1.setTransparentCircleRadius(20);
-        mBinding.chart1.setCenterTextSize(10);
-        mBinding.chart1.setCenterTextColor(R.attr.green_color_background);
-        mBinding.chart1.getDescription()
-                       .setEnabled(false);
-        mBinding.chart1.setHoleColor(android.R.color.transparent);
-        Legend l = mBinding.chart1.getLegend();
-        l.setTextSize(14f);
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        if (ThemeUtils.getCurrentThemeIsDark())
-            l.setTextColor(Color.WHITE);
-        else
-            l.setTextColor(Color.BLACK);
-        l.setEnabled(true);
-        dataSet.setValueLinePart1OffsetPercentage(90.f);
-        dataSet.setValueLinePart1Length(.10f);
-        dataSet.setValueLinePart2Length(.50f);
-        mBinding.chart1.setDrawEntryLabels(false);
-        mBinding.chart1.setTransparentCircleRadius(35f);
+        PieChartData pieChartData = new PieChartData(pieData);
+        mBinding.chart.setPieChartData(pieChartData);
     }
 
 }

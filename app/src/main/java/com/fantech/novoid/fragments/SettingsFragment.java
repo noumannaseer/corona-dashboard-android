@@ -1,11 +1,13 @@
 package com.fantech.novoid.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fantech.novoid.activities.AboutActivity;
 import com.fantech.novoid.databinding.FragmentDashboardBinding;
 import com.fantech.novoid.databinding.FragmentSettingsBinding;
 import com.fantech.novoid.utils.ThemeUtils;
@@ -30,24 +32,10 @@ public class SettingsFragment
             mBinding = FragmentSettingsBinding.inflate(inflater, parent, false);
             rootView = mBinding.getRoot();
             super.setFragment(SettingsFragment.this);
-            initControls();
+
         }
         return rootView;
     }
 
-    //***********************************************************************
-    private void initControls()
-    //***********************************************************************
-    {
-        mBinding.darkModeSwitch.setChecked(ThemeUtils.getCurrentThemeIsDark());
-        mBinding.darkModeSwitch.setOnClickListener(view->{
-            switchTheme();
-        });
 
-    }
-
-    private void switchTheme()
-    {
-        ThemeUtils.setDarkTheme(mBinding.darkModeSwitch.isChecked(),getActivity(),true);
-    }
 }
