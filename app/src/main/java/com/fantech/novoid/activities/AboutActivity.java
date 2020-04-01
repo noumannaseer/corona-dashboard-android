@@ -23,7 +23,6 @@ public class AboutActivity
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_about);
         initControls();
-
     }
 
     //******************************************

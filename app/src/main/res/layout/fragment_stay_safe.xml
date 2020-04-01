@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".fragments.GuideLinesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="2.5sp"
+            android:text="@string/things_we_need_to_know"
+            android:textColor="#00c6eb"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/darker_gray" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g1"
+            app:text="@string/guide1" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g2"
+            app:text="@string/guide2" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g3"
+            app:text="@string/guide3" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g4"
+            app:text="@string/guide4" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g5"
+            app:text="@string/guide5" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g6"
+            app:text="@string/guide6" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g7"
+            app:text="@string/guide7" />
+
+        <com.fantech.novoid.widget.GuideLineCustomView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:image="@drawable/g8"
+            app:text="@string/guide8" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -3,7 +3,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
     <script type="text/javascript">
-        var newData = [['country', 'deaths']];
+        var newData = [['country', 'confirmed']];
         // call java function from javascript
         AndroidNativeCode.getValueJson();
         var appColor = "#FFFFFF";
@@ -21,7 +21,7 @@
 
             for (var n = 0; n < Jsonobject.length; n++) {
                 // put the data in DataTable
-                newData.push([Jsonobject[n].country, parseInt(Jsonobject[n].deaths), `
+                newData.push([Jsonobject[n].country, parseInt(Jsonobject[n].confirmed), `
                 <div class="map-shape-one" onclick="call('${Jsonobject[n].country}')">
                 <p><b>${Jsonobject[n].confirmed}</b> Confirmed</p>
                 <p><b>${Jsonobject[n].recovered}</b> Recovered</p>
@@ -117,7 +117,7 @@
            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
            <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
            <script type="text/javascript">
-               var newData = [['country', 'deaths']];
+               var newData = [['country', 'confirmed']];
                // call java function from javascript
                AndroidNativeCode.getValueJson();
                var appColor = "#FFFFFF";
@@ -135,7 +135,7 @@
 
                    for (var n = 0; n < Jsonobject.length; n++) {
                        // put the data in DataTable
-                       newData.push([Jsonobject[n].country, parseInt(Jsonobject[n].deaths), `
+                       newData.push([Jsonobject[n].country, parseInt(Jsonobject[n].confirmed), `
        <div class="map-shape-one" onclick="call('${Jsonobject[n].country}')">
        <p><b>${Jsonobject[n].confirmed}</b> Confirmed</p>
        <p><b>${Jsonobject[n].recovered}</b> Recovered</p>
