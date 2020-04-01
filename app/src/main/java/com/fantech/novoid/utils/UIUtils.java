@@ -799,13 +799,13 @@ public class UIUtils
     }
 
     //*************************************************************
-    public static void setDrawable(String identifierName, ImageView imageView,Context context)
+    public static void setDrawable(String identifierName, ImageView imageView, Context context)
     //*************************************************************
     {
         val drawableId = AndroidUtil.getResources()
                                     .getIdentifier(identifierName
-                                            , Constants.DRAWABLE,context
-                                                              .getPackageName());
+                                            , Constants.DRAWABLE, context
+                                                           .getPackageName());
         try
         {
             imageView.setImageDrawable(AndroidUtil.getDrawable(drawableId));
@@ -982,6 +982,49 @@ public class UIUtils
         return bitmap;
     }
 
+    public static String getPostedTime(long previousTime)
+    {
+
+
+        long timeDifference = System.currentTimeMillis() - (previousTime);
+        long days = timeDifference / (1000 * 60 * 60 * 24);
+        long hours = timeDifference / (1000 * 60 * 60) - (days * 24);
+        long minutes = timeDifference / (1000 * 60) - (days * 24 * 60) - (hours * 60);
+        long seconds = timeDifference / (1000) - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+/*
+        days = Math.abs(days);
+        hours = Math.abs(hours);
+        minutes = Math.abs(minutes);
+        seconds = Math.abs(seconds);
+*/
+
+        String alert = "";
+        if (days > 0)
+        {
+            alert += getDate(previousTime, "dd/MM/yy");
+        }
+        else
+        {
+            if (hours > 0)
+            {
+                alert += AndroidUtil.getString(R.string.elapsed_hour_minutes,
+                                               hours, minutes, seconds);
+
+            }
+            else
+            {
+                if (minutes > 0)
+                {
+                    alert += AndroidUtil.getString(R.string.elapsed_time_minutes, minutes, seconds);
+                }
+                else
+                {
+                    alert += AndroidUtil.getString(R.string.elapsed_time_secounds, seconds);
+                }
+            }
+        }
+    return alert;
+    }
 
     //***************************************************
     public static void hideKeyboard(Activity activity)

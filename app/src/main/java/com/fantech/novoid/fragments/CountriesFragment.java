@@ -125,6 +125,9 @@ public class CountriesFragment
                                                  recovered.getQuantity(),
                                                  confirmed.getQuantity()));
         }
+        mConfirmedStats=null;
+        mDeathStats=null;
+        mRecoveredStats=null;
         showCountriesOnRecyclerView(mCountriesList);
     }
 

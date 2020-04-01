@@ -85,23 +85,23 @@ public class MapViewFragment
         mProgressView = rootView.findViewById(R.id.progress_view);
         mNoInternetImage = rootView.findViewById(R.id.no_internet);
         mCoronaStatsViewModel.getCountriesListDeath()
-         .observe(this, strings ->
-         {
-             mDeathStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mDeathStats = strings;
+                                 processList();
+                             });
         mCoronaStatsViewModel.getCountriesListRecovered()
-         .observe(this, strings ->
-         {
-             mRecoveredStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mRecoveredStats = strings;
+                                 processList();
+                             });
         mCoronaStatsViewModel.getCountriesListConfirmed()
-         .observe(this, strings ->
-         {
-             mConfirmedStats = strings;
-             processList();
-         });
+                             .observe(this, strings ->
+                             {
+                                 mConfirmedStats = strings;
+                                 processList();
+                             });
 
         mWebView.setWebViewClient(new WebViewClient()
         {
@@ -148,8 +148,11 @@ public class MapViewFragment
     private void processList()
     //*************************************************
     {
-        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null)
+        if (mRecoveredStats == null || mConfirmedStats == null || mDeathStats == null ||
+                mRecoveredStats.size()==0 || mConfirmedStats.size()==0 || mDeathStats.size()==0
+        )
             return;
+
         mCountriesList = new ArrayList<>();
         for (int i = 0; i < mRecoveredStats.size(); i++)
         {
@@ -164,6 +167,9 @@ public class MapViewFragment
                                                  recovered.getQuantity(),
                                                  confirmed.getQuantity()));
         }
+        mRecoveredStats=null;
+        mDeathStats=null;
+        mConfirmedStats=null;
 
         mWebView.getSettings()
                 .setJavaScriptEnabled(true);

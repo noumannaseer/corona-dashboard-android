@@ -130,6 +130,16 @@
                             android:textColor="?attr/background_text_color"
                             android:textSize="25sp"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:textSize="10sp"
+                            android:id="@+id/last_updated"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/total_recorved"
+                            android:textAlignment="center"
+                            android:textColor="?attr/grey_color_background" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

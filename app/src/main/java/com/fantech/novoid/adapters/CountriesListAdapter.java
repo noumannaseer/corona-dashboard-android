@@ -1,22 +1,15 @@
 package com.fantech.novoid.adapters;
 
-import android.graphics.drawable.PictureDrawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.blongho.country_data.World;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.StreamEncoder;
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ListViewCountriesBinding;
 import com.fantech.novoid.models.CoronaCountry;
-import com.fantech.novoid.utils.AndroidUtil;
-import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.ImageLoader;
 import com.fantech.novoid.utils.UIUtils;
 
-import java.io.InputStream;
 import java.util.List;
 
 import androidx.databinding.DataBindingUtil;

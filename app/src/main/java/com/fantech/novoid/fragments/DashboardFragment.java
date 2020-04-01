@@ -10,6 +10,7 @@ import com.fantech.novoid.databinding.FragmentDashboardBinding;
 import com.fantech.novoid.models.CoronaGraph;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
+import com.fantech.novoid.utils.SharedPreferencesUtils;
 import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -35,6 +36,7 @@ public class DashboardFragment
     private View rootView;
     private FragmentDashboardBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
+
     //***********************************************************************
     public void onCreate(Bundle savedInstanceState)
     //***********************************************************************
@@ -92,6 +94,7 @@ public class DashboardFragment
 
         showGraph(Constants.REPORT_DEATH);
         addTabs();
+        mBinding.lastUpdated.setText(UIUtils.getPostedTime(SharedPreferencesUtils.getLong(SharedPreferencesUtils.LAST_UPDATED_TIME)));
 
     }
 

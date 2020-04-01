@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.crashlytics.android.Crashlytics;
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ActivityHomeBinding;
 import com.fantech.novoid.fragments.BlogFragment;
@@ -17,9 +16,9 @@ import com.fantech.novoid.fragments.MapViewFragment;
 import com.fantech.novoid.fragments.SettingsFragment;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.ThemeUtils;
+import com.google.android.gms.common.util.CrashUtils;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;

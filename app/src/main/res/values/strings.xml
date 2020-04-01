@@ -53,5 +53,9 @@
     <string name="total_death_in_k">Deaths (K)</string>
     <string name="total_confirmed_in_k">Infected cases (K)</string>
     <string name="total_recovered_in_k">Recovered (K)</string>
+    <string name="elapsed_time_days_hour">last updated %1$d days, %2$d hours ago</string>
+    <string name="elapsed_hour_minutes">last updated %1$d hour, %2$d min ago</string>
+    <string name="elapsed_time_minutes">last updated %d min ago</string>
+    <string name="elapsed_time_secounds">last updated %1$d sec ago</string>
 
 </resources>
