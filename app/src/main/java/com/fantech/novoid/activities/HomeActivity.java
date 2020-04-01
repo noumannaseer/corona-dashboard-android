@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -171,11 +172,17 @@ public class HomeActivity
             notificationManager.createNotificationChannel(mChannel);
         }
 
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.mipmap.novoi_icon)
                 .setContentTitle(title)
                 .setContentText(body);
 
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBuilder.setSmallIcon(R.drawable.novoid_logo_transparent);
+            mBuilder.setColor(getResources().getColor(android.R.color.black));
+        } else {
+            mBuilder.setSmallIcon(R.drawable.novoid);
+        }
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(

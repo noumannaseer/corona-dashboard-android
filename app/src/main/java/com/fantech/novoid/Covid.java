@@ -15,6 +15,7 @@ public class Covid
 //*************************************************
 {
     private FirebaseAnalytics mFirebaseAnalytics;
+
     //*************************************************
     @Override
     public void onCreate()
@@ -23,7 +24,7 @@ public class Covid
         super.onCreate();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         AndroidUtil.setContext(getApplicationContext());
-  //      Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 
     }
 
