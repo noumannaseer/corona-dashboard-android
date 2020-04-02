@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?app_background"
-        android:orientation="vertical"
-        tools:context=".activities.AboutActivity">
-
+        tools:context=".activities.FAQActivity">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +35,7 @@
                         android:layout_gravity="center"
                         android:gravity="center_horizontal"
                         android:lineSpacingExtra="3sp"
-                        android:text="@string/about"
+                        android:text="@string/faqs"
                         android:textColor="?attr/background_text_color"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -57,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="2.5sp"
-                    android:text="@string/about"
+                    android:text="@string/faqs"
                     android:textColor="#00c6eb"
                     android:textSize="24sp" />
 
@@ -71,9 +69,20 @@
                 <com.fantech.novoid.widget.TitleDescriptionCustomView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:description="@string/fantech_labs_description"
-                    app:title="@string/fantech_labs" />
+                    app:description="@string/faq_description_1"
+                    app:title="@string/faq_title_1" />
 
+                <com.fantech.novoid.widget.TitleDescriptionCustomView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:description="@string/faq_description_2"
+                    app:title="@string/faq_title_2" />
+
+                <com.fantech.novoid.widget.TitleDescriptionCustomView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:description="@string/faq_description_3"
+                    app:title="@string/faq_title_3" />
 
             </LinearLayout>
         </LinearLayout>

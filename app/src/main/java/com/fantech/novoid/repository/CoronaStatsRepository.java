@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.fantech.novoid.dao.CoronaDAO;
 import com.fantech.novoid.database.CoronaDatabase;
@@ -38,9 +39,10 @@ public class CoronaStatsRepository
     private Calendar mCalender;
     private static final int THREE_API_CALLED = 3;
     private CoronaDAO mCoronaDAO;
+    private static final String LOG_REPO="LOG_REPO";
 
 
-    //**************************************************
+    /*//**************************************************
     public static CoronaStatsRepository getInstance(LifecycleOwner lifeCycleOwner, Context application,DBDataListener dbDataListener)
     //**************************************************
     {
@@ -51,7 +53,7 @@ public class CoronaStatsRepository
         return instance;
 
     }
-
+*/
     //**************************************************
     public CoronaStatsRepository(LifecycleOwner lifeCycleOwner, Context application, DBDataListener dbDataListener)
     //**************************************************
@@ -67,11 +69,16 @@ public class CoronaStatsRepository
     //************************************************************
     {
 
+        Log.d(LOG_REPO, "calling observer");
+
         mCoronaDAO.getAllRecords()
                        .observe(mLifeCycleOwner, coronas ->
                        {
+
+                           Log.d(LOG_REPO, "enter in observer");
                            if (mIsObserved)
                                return;
+                           Log.d(LOG_REPO,"calculating day");
                            mIsObserved = true;
                            val lastUpdated = SharedPreferencesUtils.getLong(
                                    SharedPreferencesUtils.LAST_UPDATED_TIME);
@@ -81,10 +88,12 @@ public class CoronaStatsRepository
                                loadStats();
                            else
                            {
-                               AndroidUtil.handler.postDelayed(() -> {
-                                   if(mDbDataListener!=null)
-                                       mDbDataListener.onDataInsertedInDB();
-                               }, 1000);
+                               Log.d(LOG_REPO,"Opening home activity");
+                               mCoronaDAO.getAllRecords().removeObservers(mLifeCycleOwner);
+
+
+                               if (mDbDataListener != null)
+                                   mDbDataListener.onDataInsertedInDB();
                            }
                        });
     }
@@ -92,6 +101,8 @@ public class CoronaStatsRepository
     private void loadStats()
     //*********************************************************************
     {
+        Log.d(LOG_REPO,"Stats loading");
+
         mApiCount = 0;
         mCoronaList = new ArrayList<>();
         mCalender = Calendar.getInstance();
@@ -156,6 +167,8 @@ public class CoronaStatsRepository
             AsyncTask.execute(() -> mCoronaDAO.insert(mCoronaList));
             SharedPreferencesUtils.setValue(SharedPreferencesUtils.LAST_UPDATED_TIME,
                                             System.currentTimeMillis());
+            Log.d(LOG_REPO,"data loaded opening home activity");
+            mCoronaDAO.getAllRecords().removeObservers(mLifeCycleOwner);
             if(mDbDataListener!=null)
                 mDbDataListener.onDataInsertedInDB();
         }

@@ -1,16 +1,19 @@
 package com.fantech.novoid.fragments;
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ChartDetailDialogBinding;
 import com.fantech.novoid.databinding.FragmentDashboardBinding;
 import com.fantech.novoid.models.CoronaGraph;
+import com.fantech.novoid.repository.CoronaStatsRepository;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.SharedPreferencesUtils;
@@ -25,6 +28,7 @@ import java.util.List;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
@@ -38,6 +42,7 @@ import lombok.val;
 //********************************************
 public class DashboardFragment
         extends BaseFragment
+    implements SwipeRefreshLayout.OnRefreshListener
 //********************************************
 {
     private View rootView;
@@ -62,15 +67,27 @@ public class DashboardFragment
             mBinding = FragmentDashboardBinding.inflate(inflater, parent, false);
             rootView = mBinding.getRoot();
             super.setFragment(DashboardFragment.this);
-            initControls();
+           loadStats();
+
         }
         return rootView;
+    }
+
+    private void loadStats()
+    {
+
+        showLoadingDialog();
+        new CoronaStatsRepository(this, getActivity(), () -> initControls())
+                             .checkPreviousData();
     }
 
     //**********************************************
     private void initControls()
     //**********************************************
     {
+        hideLoadingDialog();
+        if(mBinding.pullToRefresh.isRefreshing())
+            mBinding.pullToRefresh.setRefreshing(false);
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
         mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH)
@@ -105,6 +122,8 @@ public class DashboardFragment
         mBinding.lastUpdated.setText(AndroidUtil.getString(R.string.updated_at_template,
                                                            UIUtils.getDate(updatedTime,
                                                                            "MMM dd, yyyy hh:mm a z")));
+        mBinding.pullToRefresh.setOnRefreshListener(this);
+
 
     }
 
@@ -127,6 +146,7 @@ public class DashboardFragment
     private void addMapTabs()
     //**********************************************
     {
+        mBinding.tabLayout.removeAllTabs();
         mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
                                                     .setText(
                                                             getString(R.string.total_death)));
@@ -296,6 +316,11 @@ public class DashboardFragment
     {
 
         final Dialog dialog = new Dialog(getActivity());
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
         ChartDetailDialogBinding chartDetail = DataBindingUtil.inflate(
                 LayoutInflater.from(getActivity()), R.layout.chart_detail_dialog, null, false);
         dialog.setContentView(chartDetail.getRoot());
@@ -307,4 +332,10 @@ public class DashboardFragment
 
     }
 
+    @Override
+    public void onRefresh()
+    {
+        SharedPreferencesUtils.setValue(SharedPreferencesUtils.LAST_UPDATED_TIME,(long)0);
+        loadStats();
+    }
 }

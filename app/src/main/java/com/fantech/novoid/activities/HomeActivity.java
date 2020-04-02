@@ -138,10 +138,13 @@ public class HomeActivity
         mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH,countryName)
          .observe(this,
                   deaths -> {
+
                      mCoronaStatsViewModel.countSum(Constants.REPORT_CONFIRMED,countryName)
                           .observe(this, confirmed -> {
                               mCoronaStatsViewModel.countSum(Constants.REPORT_RECOVERED,countryName)
                                                    .observe(this, recovered -> {
+                                                       if(deaths==null || confirmed==null || recovered==null)
+                                                           return;
                                                        Intent countryDetailIntent=new Intent(this,CountryStatsActivity.class);
                                                        countryDetailIntent.putExtra(CountryStatsActivity.COUNTRY_NAME,countryName);
                                                        String stats=AndroidUtil.getString(R.string.stats_notification,deaths,confirmed,recovered);
@@ -178,7 +181,7 @@ public class HomeActivity
                 .setContentText(body);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder.setSmallIcon(R.drawable.novoid_logo_transparent);
+            mBuilder.setSmallIcon(R.drawable.single_color_noviod);
             mBuilder.setColor(getResources().getColor(android.R.color.black));
         } else {
             mBuilder.setSmallIcon(R.drawable.novoid);

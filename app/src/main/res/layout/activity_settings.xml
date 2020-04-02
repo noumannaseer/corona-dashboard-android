@@ -58,16 +58,16 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/help_solid"
                     android:drawablePadding="10dp"
-                    android:drawableTint="?attr/green_color_background"
+                    android:drawableTint="?attr/settings_color_background"
                     android:padding="10dp"
                     android:text="@string/help"
-                    android:textColor="?attr/green_color_background"
+                    android:textColor="?attr/settings_color_background"
                     android:textSize="20sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
-                    android:background="?attr/green_color_background" />
+                    android:background="?attr/grey_color_background" />
 
                 <TextView
 
@@ -77,17 +77,17 @@
                     android:layout_marginTop="10dp"
                     android:drawableStart="@drawable/about_solid"
                     android:drawablePadding="10dp"
-                    android:drawableTint="?attr/green_color_background"
+                    android:drawableTint="?attr/settings_color_background"
                     android:padding="10dp"
                     android:text="@string/about"
-                    android:textColor="?attr/green_color_background"
+                    android:textColor="?attr/settings_color_background"
                     android:textSize="20sp"
                     tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
-                    android:background="?attr/green_color_background" />
+                    android:background="?attr/grey_color_background" />
 
                 <TextView
                     android:id="@+id/faqs"
@@ -96,17 +96,17 @@
                     android:layout_marginTop="10dp"
                     android:drawableStart="@drawable/faqs_solid"
                     android:drawablePadding="10dp"
-                    android:drawableTint="?attr/green_color_background"
+                    android:drawableTint="?attr/settings_color_background"
                     android:padding="10dp"
                     android:text="@string/faqs"
-                    android:textColor="?attr/green_color_background"
+                    android:textColor="?attr/settings_color_background"
                     android:textSize="20sp"
                     tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
-                    android:background="?attr/green_color_background" />
+                    android:background="?attr/grey_color_background" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -118,10 +118,10 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/light_dark"
                         android:drawablePadding="10dp"
-                        android:drawableTint="?attr/green_color_background"
+                        android:drawableTint="?attr/settings_color_background"
                         android:padding="10dp"
                         android:text="@string/dark_mode"
-                        android:textColor="?attr/green_color_background"
+                        android:textColor="?attr/settings_color_background"
                         android:textSize="20sp"
                         tools:ignore="HardcodedText" />
 
@@ -130,8 +130,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:buttonTint="?attr/green_color_background"
-                        android:thumbTint="?attr/green_color_background"
+                        android:buttonTint="?attr/settings_color_background"
+                        android:thumbTint="?attr/settings_color_background"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -140,7 +140,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
-                    android:background="?attr/green_color_background" />
+                    android:background="?attr/grey_color_background" />
 
 
             </LinearLayout>

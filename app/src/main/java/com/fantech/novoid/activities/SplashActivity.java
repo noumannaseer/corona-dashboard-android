@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.fantech.novoid.repository.CoronaStatsRepository;
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ActivitySplashBinding;
+import com.fantech.novoid.utils.AndroidUtil;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -25,7 +26,10 @@ public class SplashActivity
     //*********************************************************************
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-        initControls();
+
+        AndroidUtil.handler.postDelayed(() -> {
+            gotoHomeActivity();
+        }, 1000);
     }
 
 
@@ -33,17 +37,9 @@ public class SplashActivity
     private void gotoHomeActivity()
     //*********************************************************************
     {
-        Intent homeIntent = new Intent(this, HomeActivity.class);
+        Intent homeIntent = new Intent(this, WizardActivity.class);
         startActivity(homeIntent);
         finish();
-    }
-
-    //*********************************************************************
-    private void initControls()
-    //*********************************************************************
-    {
-        CoronaStatsRepository.getInstance(this,this, () -> gotoHomeActivity())
-                             .checkPreviousData();
     }
 
 }

@@ -18,6 +18,7 @@
         <item name="red_color_background">@color/red_color_background1</item>
         <item name="brown_color_background">@color/brown_color_background1</item>
         <item name="grey_color_background">@color/grey_color_background1</item>
+        <item name="settings_color_background">@color/setting_text_color2</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="toolbarStyle">@style/toolbarStyleF</item>
         <item name="windowNoTitle">true</item>
@@ -76,6 +77,8 @@
         <item name="red_color_background">@color/red_color_background2</item>
         <item name="brown_color_background">@color/brown_color_background2</item>
         <item name="grey_color_background">@color/grey_color_background2</item>
+        <item name="settings_color_background">@color/setting_text_color1</item>
+
         <item name="android:windowLightStatusBar">false</item>
         <item name="toolbarStyle">@style/toolbarStyleF</item>
         <item name="windowNoTitle">true</item>

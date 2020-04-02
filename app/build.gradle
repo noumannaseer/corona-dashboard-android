@@ -95,4 +95,7 @@ dependencies {
 
     // Add the Crashlytics Gradle plugin.
 
+    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+
+
 }
