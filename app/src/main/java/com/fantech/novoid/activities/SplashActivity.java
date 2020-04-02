@@ -170,4 +170,5 @@ public class SplashActivity
         mStatsViewModel = ViewModelProviders.of(this)
                                             .get(CoronaStatsViewModel.class);
     }
+    
 }
