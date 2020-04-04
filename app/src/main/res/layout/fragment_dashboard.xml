@@ -16,7 +16,21 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/country_world_wide"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:background="@android:color/transparent"
+                android:elevation="50dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:tabIndicatorColor="?attr/green_color_background"
+                app:tabIndicatorHeight="2dp"
+                app:tabPadding="0dp"
+                app:tabSelectedTextColor="?attr/green_color_background"
+                app:tabTextAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                app:tabTextColor="?grey_color_background" />
 
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="10dp"

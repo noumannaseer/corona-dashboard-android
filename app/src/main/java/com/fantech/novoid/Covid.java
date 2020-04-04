@@ -15,6 +15,7 @@ public class Covid
 //*************************************************
 {
     private FirebaseAnalytics mFirebaseAnalytics;
+
     //*************************************************
     @Override
     public void onCreate()

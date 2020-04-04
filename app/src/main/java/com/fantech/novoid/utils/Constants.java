@@ -13,4 +13,5 @@ public class Constants
     public static final String CONFIRMED = "confirmed";
     public static final String FLAG_PREFIX = "flag_";
     public static final String DRAWABLE = "drawable";
+    public static final String IMAGE_DESCRIPTION = "Image Description";
 }
