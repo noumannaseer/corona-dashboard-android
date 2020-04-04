@@ -46,6 +46,14 @@ public class CountriesFragment
     private List<CoronaCountry> mFilteredList;
 
 
+    //*************************************************************************
+    public CountriesFragment()
+    //*************************************************************************
+    {
+
+    }
+
+
     //***********************************************************************
     @Override
     public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
@@ -68,28 +76,41 @@ public class CountriesFragment
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
         mCoronaStatsViewModel.getCountriesListDeath()
-                             .observe(this, strings ->
-                             {
-                                 mDeathStats = strings;
-                                 processList();
-                             });
+         .observe(this, strings ->
+         {
+             mDeathStats = strings;
+             processList();
+         });
         mCoronaStatsViewModel.getCountriesListRecovered()
-                             .observe(this, strings ->
-                             {
-                                 mRecoveredStats = strings;
-                                 processList();
-                             });
+         .observe(this, strings ->
+         {
+             mRecoveredStats = strings;
+             processList();
+         });
         mCoronaStatsViewModel.getCountriesListConfirmed()
-                             .observe(this, strings ->
-                             {
-                                 mConfirmedStats = strings;
-                                 processList();
-                             });
-
+         .observe(this, strings ->
+         {
+             mConfirmedStats = strings;
+             processList();
+         });
         attachTextChangeListener();
         mBinding.filter.setOnClickListener(view -> showFilter());
+        mFilteredList=new ArrayList<>();
+
 
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (mCountriesList == null || mCountriesList.size() == 0)
+        {
+            initControls();
+        }
+
+    }
+
 
     //*************************************************************
     private void showFilter()
@@ -130,7 +151,6 @@ public class CountriesFragment
         mConfirmedStats = null;
         mDeathStats = null;
         mRecoveredStats = null;
-        mFilteredList=new ArrayList<>();
         showCountriesOnRecyclerView(mCountriesList);
     }
 
@@ -188,10 +208,21 @@ public class CountriesFragment
     private void showCountriesOnRecyclerView(List<CoronaCountry> countriesList)
     //***********************************************************************
     {
-        applySorting(countriesList);
-        mFilteredList.clear();;
-        mFilteredList.addAll(countriesList);
 
+        if (countriesList == null || countriesList.size() == 0)
+        {
+            mBinding.recyclerView.setVisibility(View.GONE);
+            mBinding.noResultFound.setVisibility(View.VISIBLE);
+            return;
+        }
+        else
+        {
+            mBinding.recyclerView.setVisibility(View.VISIBLE);
+            mBinding.noResultFound.setVisibility(View.GONE);
+        }
+        applySorting(countriesList);
+        mFilteredList.clear();
+        mFilteredList.addAll(countriesList);
         if (mCountriesListAdapter == null)
         {
 
@@ -209,6 +240,8 @@ public class CountriesFragment
     private void applySorting(List<CoronaCountry> countriesList)
     //***********************************************************************
     {
+        if(countriesList==null)
+            return;
         Collections.sort(countriesList, new Comparator<CoronaCountry>()
         {
             @Override
@@ -233,8 +266,10 @@ public class CountriesFragment
                 }
             }
 
+            //*****************************************
             @Override
             public boolean equals(Object obj)
+            //*****************************************
             {
                 return false;
             }

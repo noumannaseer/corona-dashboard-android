@@ -1,22 +1,30 @@
 package com.fantech.novoid.fragments;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
 
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ChartDetailDialogBinding;
 import com.fantech.novoid.databinding.FragmentDashboardBinding;
 import com.fantech.novoid.models.CoronaGraph;
+import com.fantech.novoid.repository.CoronaStatsRepository;
+import com.fantech.novoid.utils.AlertReceiver;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.SharedPreferencesUtils;
+import com.fantech.novoid.utils.ThemeUtils;
 import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +33,7 @@ import java.util.List;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
@@ -38,11 +47,20 @@ import lombok.val;
 //********************************************
 public class DashboardFragment
         extends BaseFragment
+    implements SwipeRefreshLayout.OnRefreshListener
 //********************************************
 {
     private View rootView;
     private FragmentDashboardBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
+
+
+    //*************************************************************************
+    public DashboardFragment()
+    //*************************************************************************
+    {
+
+    }
 
     //***********************************************************************
     public void onCreate(Bundle savedInstanceState)
@@ -62,15 +80,58 @@ public class DashboardFragment
             mBinding = FragmentDashboardBinding.inflate(inflater, parent, false);
             rootView = mBinding.getRoot();
             super.setFragment(DashboardFragment.this);
-            initControls();
+           loadStats();
+
         }
         return rootView;
     }
 
     //**********************************************
-    private void initControls()
+    private void loadStats()
     //**********************************************
     {
+
+        if(ThemeUtils.getCurrentThemeIsDark())
+            mBinding.pullToRefresh.setBackgroundColor(AndroidUtil.getColor(R.color.app_background2));
+        showLoadingDialog();
+        new CoronaStatsRepository(this, getActivity(), isSuccessfully -> initControls(isSuccessfully))
+                             .checkPreviousData();
+    }
+
+
+    //*******************************************************************************
+    private void startAlarm()
+    //**************************************************************************
+    {
+        val alarmTime=SharedPreferencesUtils.getLong(SharedPreferencesUtils.NOTIFICATION_TIME);
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTimeInMillis(alarmTime);
+        Calendar todayCalender=Calendar.getInstance();
+        if(todayCalender.after(calendar))
+        {
+            calendar.add(Calendar.MINUTE,60*24);
+        }
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getActivity(), AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 10, intent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),24*60*60*1000, pendingIntent);
+        SharedPreferencesUtils.setValue(SharedPreferencesUtils.IS_ALARM_SET,true);
+    }
+
+    //**********************************************
+    private void initControls(boolean isSuccessfully)
+    //**********************************************
+    {
+        hideLoadingDialog();
+
+        if(mBinding.pullToRefresh.isRefreshing())
+            mBinding.pullToRefresh.setRefreshing(false);
+        mBinding.pullToRefresh.setOnRefreshListener(this);
+
+        if (!isSuccessfully)
+        {
+            return;
+        }
         mCoronaStatsViewModel = ViewModelProviders.of(this)
                                                   .get(CoronaStatsViewModel.class);
         mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH)
@@ -99,12 +160,62 @@ public class DashboardFragment
                               UIUtils.getFormattedAmount(integer));
                   });
 
+
+        setBackGround(mBinding.deathTextView);
         showGraph(Constants.REPORT_DEATH);
-        addMapTabs();
         val updatedTime = SharedPreferencesUtils.getLong(SharedPreferencesUtils.LAST_UPDATED_TIME);
-        mBinding.lastUpdated.setText(AndroidUtil.getString(R.string.updated_at_template,
-                                                           UIUtils.getDate(updatedTime,
-                                                                           "MMM dd, yyyy hh:mm a z")));
+        mBinding.lastUpdated.setText(UIUtils.getDate(updatedTime,
+                                                     "hh:mm, MMM dd, yyyy"));
+        val isAlarmSet=SharedPreferencesUtils.getBoolean(SharedPreferencesUtils.IS_ALARM_SET);
+
+        mBinding.deathTextView.setOnClickListener(view->{
+            setBackGround(mBinding.deathTextView);
+            showGraph(Constants.REPORT_DEATH);
+        });
+
+        mBinding.infectedCasesTextView.setOnClickListener(view->{
+            setBackGround(mBinding.infectedCasesTextView);
+            showGraph(Constants.REPORT_CONFIRMED);
+        });
+
+        mBinding.recoveredTextView.setOnClickListener(view->{
+            setBackGround(mBinding.recoveredTextView);
+            showGraph(Constants.REPORT_RECOVERED);
+        });
+
+        if(!isAlarmSet)
+        startAlarm();
+
+    }
+
+    private void setBackGround(TextView textView)
+    {
+        mBinding.deathTextView.setBackground(null);
+        mBinding.infectedCasesTextView.setBackground(null);
+        mBinding.recoveredTextView.setBackground(null);
+        mBinding.deathTextView.setTextColor(AndroidUtil.getColor(R.color.tab_text_color));
+        mBinding.infectedCasesTextView.setTextColor(AndroidUtil.getColor(R.color.tab_text_color));
+        mBinding.recoveredTextView.setTextColor(AndroidUtil.getColor(R.color.tab_text_color));
+        if (textView == mBinding.deathTextView)
+        {
+            mBinding.deathTextView.setBackground(AndroidUtil.getDrawable(R.drawable.selected_tab_background));
+            mBinding.deathTextView.setTextColor(AndroidUtil.getColor(android.R.color.white));
+
+
+        }
+
+        else if (textView == mBinding.infectedCasesTextView)
+        {
+            mBinding.infectedCasesTextView.setBackground(AndroidUtil.getDrawable(R.drawable.selected_tab_background));
+            mBinding.infectedCasesTextView.setTextColor(AndroidUtil.getColor(android.R.color.white));
+        }
+        else
+        {
+            mBinding.recoveredTextView.setBackground(AndroidUtil.getDrawable(R.drawable.selected_tab_background));
+            mBinding.recoveredTextView.setTextColor(AndroidUtil.getColor(android.R.color.white));
+        }
+
+
 
     }
 
@@ -123,77 +234,6 @@ public class DashboardFragment
 
     }
 
-    //**********************************************
-    private void addMapTabs()
-    //**********************************************
-    {
-        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
-                                                    .setText(
-                                                            getString(R.string.total_death)));
-        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
-                                                    .setText(getString(R.string.total_confirmed)));
-        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab()
-                                                    .setText(getString(R.string.total_recorved)));
-
-        mBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-        {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab)
-            {
-                showGraph(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab)
-            {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab)
-            {
-
-            }
-        });
-    }
-
-    //**********************************************
-    private void addMainTabs()
-    //**********************************************
-    {
-        mBinding.countryWorldWide.addTab(mBinding.countryWorldWide.newTab()
-                                                                  .setText(
-                                                                          getString(
-                                                                                  R.string.total_death)));
-        mBinding.countryWorldWide.addTab(mBinding.countryWorldWide.newTab()
-                                                                  .setText(getString(
-                                                                          R.string.total_confirmed)));
-        mBinding.countryWorldWide.addTab(mBinding.countryWorldWide.newTab()
-                                                                  .setText(getString(
-                                                                          R.string.total_recorved)));
-
-        mBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-        {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab)
-            {
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab)
-            {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab)
-            {
-
-            }
-        });
-    }
 
 
     //*****************************************************************************
@@ -235,8 +275,6 @@ public class DashboardFragment
         data.setAxisXBottom(axis);
         axis.setHasTiltedLabels(true);
         axis.setMaxLabelChars(8);
-
-
         Axis yAxis = new Axis();
         if (reportType == Constants.REPORT_DEATH)
             yAxis.setName(AndroidUtil.getString(R.string.total_death_in_k));
@@ -296,6 +334,11 @@ public class DashboardFragment
     {
 
         final Dialog dialog = new Dialog(getActivity());
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
         ChartDetailDialogBinding chartDetail = DataBindingUtil.inflate(
                 LayoutInflater.from(getActivity()), R.layout.chart_detail_dialog, null, false);
         dialog.setContentView(chartDetail.getRoot());
@@ -307,4 +350,10 @@ public class DashboardFragment
 
     }
 
+    @Override
+    public void onRefresh()
+    {
+        SharedPreferencesUtils.setValue(SharedPreferencesUtils.LAST_UPDATED_TIME,(long)0);
+        loadStats();
+    }
 }

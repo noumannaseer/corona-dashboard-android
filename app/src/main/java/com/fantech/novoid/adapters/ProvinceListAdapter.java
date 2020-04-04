@@ -11,6 +11,7 @@ import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.databinding.DataBindingUtil;
@@ -41,6 +42,13 @@ public class ProvinceListAdapter
                                                   .get(CoronaStatsViewModel.class);
         mCountryName = countryName;
         mFragment = fragment;
+        List<String> provinceTempList=new ArrayList<>();
+        for(val province:mCountriesList)
+        {
+            if(!TextUtils.isEmpty(province))
+                provinceTempList.add(province);
+        }
+       this.mCountriesList=provinceTempList;
     }
 
     //**********************************************
@@ -80,10 +88,6 @@ public class ProvinceListAdapter
     {
         val item = mCountriesList.get(position);
         holder.mBinding.province.setText(item);
-        if(TextUtils.isEmpty(item))
-        {
-            holder.mBinding.mainView.setVisibility(View.GONE);
-        }
         holder.mBinding.mainView.setOnClickListener(view ->
         {
             if (holder.mBinding.up.getVisibility() == View.VISIBLE)

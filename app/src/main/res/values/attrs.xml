@@ -11,5 +11,7 @@
     <attr name="red_color_background" format="reference" />
     <attr name="brown_color_background" format="reference" />
     <attr name="grey_color_background" format="reference" />
+    <attr name="settings_color_background" format="reference" />
+
 
 </resources>

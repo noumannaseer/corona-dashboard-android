@@ -39,7 +39,26 @@ public class SettingsActivity
             switchTheme();
         });
         mBinding.about.setOnClickListener(view -> gotoAboutActivity());
+        mBinding.help.setOnClickListener(view -> gotoHelpActivity());
+        mBinding.faqs.setOnClickListener(view -> gotoFAQActivity());
 
+    }
+
+    //***********************************************************************
+    private void gotoFAQActivity()
+    //***********************************************************************
+    {
+
+        Intent faqIntent = new Intent(this, FAQActivity.class);
+        startActivity(faqIntent);
+    }
+
+    //***********************************************************************
+    private void gotoHelpActivity()
+    //***********************************************************************
+    {
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
     }
 
     //***********************************************************************

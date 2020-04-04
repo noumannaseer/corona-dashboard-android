@@ -31,6 +31,5 @@ public class AboutActivity
     {
         setSupportActionBar(mBinding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
     }
 }

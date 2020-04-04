@@ -6,6 +6,8 @@ import android.telephony.TelephonyManager;
 import com.fantech.novoid.R;
 import com.fantech.novoid.utils.AndroidUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import lombok.NonNull;
@@ -17,14 +19,15 @@ public class CountryReader
 {
 
     //********************************************************************
-    private static  String getCountryName(@NonNull String countryCode)
+    private static String getCountryName(@NonNull String countryCode)
     //********************************************************************
     {
         val countriesList = AndroidUtil.getStringArray(R.array.countries);
         for (val country : countriesList)
         {
             val countryDetail = new Country(country);
-            if (countryDetail.getCountryCode().toLowerCase()
+            if (countryDetail.getCountryCode()
+                             .toLowerCase()
                              .equals(countryCode.toLowerCase()))
             {
                 return countryDetail.getCountryName();
@@ -60,6 +63,22 @@ public class CountryReader
         {
         }
         return null;
+    }
+
+    //********************************************************************
+    public static List<String> getCountriesList()
+    //********************************************************************
+    {
+        val countriesList = AndroidUtil.getStringArray(R.array.countries);
+        List<String> countriesStringList = new ArrayList<>();
+        for (val country : countriesList)
+        {
+            val countryDetail = new Country(country);
+            countriesStringList.add(countryDetail.getCountryName());
+
+        }
+        return countriesStringList;
+
     }
 
 }

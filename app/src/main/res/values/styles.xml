@@ -18,11 +18,13 @@
         <item name="red_color_background">@color/red_color_background1</item>
         <item name="brown_color_background">@color/brown_color_background1</item>
         <item name="grey_color_background">@color/grey_color_background1</item>
+        <item name="settings_color_background">@color/setting_text_color2</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="toolbarStyle">@style/toolbarStyleF</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fontFamily">@font/font</item>
 
     </style>
     <style name="full_screen_alert" parent="AppTheme">
@@ -33,6 +35,12 @@
         <item name="android:windowBackground">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="MatButton" parent="Theme.MaterialComponents">
+        <item name="colorOnPrimary">@android:color/holo_red_light</item>
+        <item name="colorPrimary">@android:color/holo_orange_dark</item>
+        <item name="colorOnSurface">@android:color/holo_orange_light</item>
     </style>
 
 
@@ -76,11 +84,14 @@
         <item name="red_color_background">@color/red_color_background2</item>
         <item name="brown_color_background">@color/brown_color_background2</item>
         <item name="grey_color_background">@color/grey_color_background2</item>
+        <item name="settings_color_background">@color/setting_text_color1</item>
+
         <item name="android:windowLightStatusBar">false</item>
         <item name="toolbarStyle">@style/toolbarStyleF</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fontFamily">@font/font</item>
 
 
     </style>

@@ -19,6 +19,9 @@ public class SharedPreferencesUtils
     public static final String PREF_KEY_FILE_NAME = getApplicationContext()
             .getPackageName();
     public static final String LAST_UPDATED_TIME = "LAST_UPDATED_TIME";
+    public static final String NOTIFICATION_TIME = "NOTIFICATION_TIME";
+    public static final String IS_ALARM_SET = "IS_ALARM_SET";
+
 
 
     public static void setValue(String key, boolean status)

@@ -4,21 +4,34 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".Covid"
         android:allowBackup="true"
         android:icon="@mipmap/novoi_icon"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/novoi_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SettingsActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activities.AboutActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.CountryStatsActivity" android:parentActivityName=".activities.HomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.WizardActivity"></activity>
+        <activity android:name=".activities.FAQActivity" />
+        <activity android:name=".activities.HelpActivity" />
         <activity
-            android:name=".activities.HomeActivity" android:screenOrientation="portrait"
+            android:name=".activities.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CountryStatsActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".activities.SplashActivity"
@@ -37,6 +50,11 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3a90ec7c634f8fe205fe3f61a40eb548f996d7fe" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <receiver android:name=".utils.AlertReceiver" />
     </application>
 
 </manifest>

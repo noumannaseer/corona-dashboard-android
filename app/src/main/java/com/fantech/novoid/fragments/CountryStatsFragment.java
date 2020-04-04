@@ -37,10 +37,20 @@ public class CountryStatsFragment
     private int mTotalRecovered = 0;
     private int mTotalConfirmed = 0;
 
+    //***********************************************************************
     public CountryStatsFragment(String mCountryName)
+    //***********************************************************************
     {
         this.mCountryName = mCountryName;
     }
+
+    //*************************************************************************
+    public CountryStatsFragment()
+    //*************************************************************************
+    {
+
+    }
+
 
     //***********************************************************************
     @Override

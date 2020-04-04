@@ -61,8 +61,6 @@ public class FilterBottomSheet
     private void initControls()
     //********************************************************************************************************************
     {
-        val status = AndroidUtil.getString(R.string.low);
-
         switch (mSortType)
         {
         case ASCENDING:
@@ -87,7 +85,6 @@ public class FilterBottomSheet
             break;
         }
         UIUtils.setRadioExclusiveClick(mBinding.sortType);
-
         mBinding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
             @Override

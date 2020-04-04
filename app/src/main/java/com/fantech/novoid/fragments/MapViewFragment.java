@@ -58,6 +58,14 @@ public class MapViewFragment
     private ImageView mNoInternetImage;
 
 
+    //*************************************************************************
+    public MapViewFragment()
+    //*************************************************************************
+    {
+
+    }
+
+
     @SuppressLint("SetJavaScriptEnabled")
     //***********************************************************************
     @Override
@@ -135,10 +143,6 @@ public class MapViewFragment
                 .setMinimumFontSize(1);
         mWebView.getSettings()
                 .setMinimumLogicalFontSize(1);
-        mWebView.getSettings()
-                .setJavaScriptEnabled(true);
-        mWebView.getSettings()
-                .setJavaScriptEnabled(true);
         mWebView.getSettings()
                 .setUseWideViewPort(true);
 

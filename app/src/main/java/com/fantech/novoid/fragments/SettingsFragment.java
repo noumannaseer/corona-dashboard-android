@@ -22,6 +22,13 @@ public class SettingsFragment
     private FragmentSettingsBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
 
+    //*************************************************************************
+    public SettingsFragment()
+    //*************************************************************************
+    {
+
+    }
+
     //***********************************************************************
     @Override
     public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)

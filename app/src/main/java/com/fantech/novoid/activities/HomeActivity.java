@@ -1,40 +1,28 @@
 package com.fantech.novoid.activities;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.fantech.novoid.R;
 import com.fantech.novoid.databinding.ActivityHomeBinding;
-import com.fantech.novoid.fragments.BlogFragment;
 import com.fantech.novoid.fragments.CountriesFragment;
 import com.fantech.novoid.fragments.DashboardFragment;
 import com.fantech.novoid.fragments.GuideLinesFragment;
 import com.fantech.novoid.fragments.MapViewFragment;
 import com.fantech.novoid.fragments.SettingsFragment;
-import com.fantech.novoid.models.CountryReader;
 import com.fantech.novoid.utils.AndroidUtil;
-import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.ThemeUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 
 //**************************************************
 public class HomeActivity
@@ -48,7 +36,6 @@ public class HomeActivity
     private GuideLinesFragment mGuideLinesFragment;
     private SettingsFragment mSettingsFragment;
     private boolean mIsDarkTheme;
-    private CoronaStatsViewModel mCoronaStatsViewModel;
 
     //**************************************************
     @Override
@@ -122,79 +109,8 @@ public class HomeActivity
               return true;
           });
         loadFragment(mDashboardFragment);
-       sendNotification(CountryReader.getUserCountry(this));
 
     }
-
-    //******************************************************
-    private void sendNotification(String countryName)
-    //******************************************************
-    {
-
-        if(TextUtils.isEmpty(countryName))
-            return;
-        mCoronaStatsViewModel = ViewModelProviders.of(this)
-                                                  .get(CoronaStatsViewModel.class);
-        mCoronaStatsViewModel.countSum(Constants.REPORT_DEATH,countryName)
-         .observe(this,
-                  deaths -> {
-                     mCoronaStatsViewModel.countSum(Constants.REPORT_CONFIRMED,countryName)
-                          .observe(this, confirmed -> {
-                              mCoronaStatsViewModel.countSum(Constants.REPORT_RECOVERED,countryName)
-                                                   .observe(this, recovered -> {
-                                                       Intent countryDetailIntent=new Intent(this,CountryStatsActivity.class);
-                                                       countryDetailIntent.putExtra(CountryStatsActivity.COUNTRY_NAME,countryName);
-                                                       String stats=AndroidUtil.getString(R.string.stats_notification,deaths,confirmed,recovered);
-                                                       createNotification(this, AndroidUtil.getString(R.string.today_stats), stats, countryDetailIntent);
-                                                   });
-                          });
-                  });
-
-    }
-
-    //*****************************************************************************************
-    private void createNotification(Context context, String title, String body, Intent intent)
-    //*****************************************************************************************
-    {
-
-        NotificationManager notificationManager = (NotificationManager)context.getSystemService(
-                Context.NOTIFICATION_SERVICE);
-
-        int notificationId = 1;
-        String channelId = "channel-01sas";
-        String channelName = "Channel Namesasasasasasa";
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-        {
-            NotificationChannel mChannel = new NotificationChannel(
-                    channelId, channelName, importance);
-            notificationManager.createNotificationChannel(mChannel);
-        }
-
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
-                .setContentTitle(title)
-                .setContentText(body);
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder.setSmallIcon(R.drawable.novoid_logo_transparent);
-            mBuilder.setColor(getResources().getColor(android.R.color.black));
-        } else {
-            mBuilder.setSmallIcon(R.drawable.novoid);
-        }
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
-                0,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
-        mBuilder.setContentIntent(resultPendingIntent);
-
-        mBuilder.setAutoCancel(true);
-        notificationManager.notify(notificationId, mBuilder.build());
-    }
-
 
     //******************************************************************
     @Override

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?app_background"
+        tools:context=".activities.FAQActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_horizontal"
+                        android:lineSpacingExtra="3sp"
+                        android:text="@string/faqs"
+                        android:textColor="?attr/background_text_color"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="2.5sp"
+                    android:text="@string/faqs"
+                    android:textColor="#00c6eb"
+                    android:textSize="24sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="17dp"
+                    android:background="@color/grey_color" />
+
+                <com.fantech.novoid.widget.TitleDescriptionCustomView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:description="@string/faq_description_1"
+                    app:title="@string/faq_title_1" />
+
+                <com.fantech.novoid.widget.TitleDescriptionCustomView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:description="@string/faq_description_2"
+                    app:title="@string/faq_title_2" />
+
+                <com.fantech.novoid.widget.TitleDescriptionCustomView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:description="@string/faq_description_3"
+                    app:title="@string/faq_title_3" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

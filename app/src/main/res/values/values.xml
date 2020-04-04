@@ -5,4 +5,11 @@
         <attr name="text" format="string" />
         <attr name="image" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionCustomView">
+        <attr name="title" format="string" />
+        <attr name="description" format="string" />
+    </declare-styleable>
+
+
 </resources>
