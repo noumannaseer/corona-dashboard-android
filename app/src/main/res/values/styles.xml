@@ -24,6 +24,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fontFamily">@font/font</item>
 
     </style>
     <style name="full_screen_alert" parent="AppTheme">
@@ -90,6 +91,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fontFamily">@font/font</item>
 
 
     </style>

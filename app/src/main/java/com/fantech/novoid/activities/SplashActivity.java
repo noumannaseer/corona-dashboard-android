@@ -8,13 +8,14 @@ import com.fantech.novoid.databinding.ActivitySplashBinding;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.SharedPreferencesUtils;
 
+
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import lombok.val;
 
 //*********************************************************************
 public class SplashActivity
-        extends BaseActivity
+		extends BaseActivity
 //*********************************************************************
 {
     private ActivitySplashBinding mBinding;
@@ -57,5 +58,6 @@ public class SplashActivity
         startActivity(homeIntent);
         finish();
     }
+
 
 }

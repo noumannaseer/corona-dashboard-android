@@ -106,6 +106,11 @@ public class DashboardFragment
         val alarmTime=SharedPreferencesUtils.getLong(SharedPreferencesUtils.NOTIFICATION_TIME);
         Calendar calendar=Calendar.getInstance();
         calendar.setTimeInMillis(alarmTime);
+        Calendar todayCalender=Calendar.getInstance();
+        if(todayCalender.after(calendar))
+        {
+            calendar.add(Calendar.MINUTE,60*24);
+        }
         AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getActivity(), AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 10, intent, 0);

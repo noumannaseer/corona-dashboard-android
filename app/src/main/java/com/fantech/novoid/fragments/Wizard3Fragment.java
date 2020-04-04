@@ -52,7 +52,6 @@ public class Wizard3Fragment
             mBinding = FragmentWizard3Binding.inflate(inflater, parent, false);
             rootView = mBinding.getRoot();
             initControls();
-
         }
         return rootView;
     }
@@ -61,6 +60,7 @@ public class Wizard3Fragment
     private void initControls()
     //***********************************************************************
     {
+        SharedPreferencesUtils.setValue(SharedPreferencesUtils.IS_ALARM_SET,false);
         mBinding.selectTime.setOnClickListener(view -> showTimeDialog());
         mBinding.next.setOnClickListener(view -> proceedNext());
         val todayCalender = Calendar.getInstance();

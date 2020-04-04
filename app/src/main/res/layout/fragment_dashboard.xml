@@ -100,7 +100,7 @@
                                         android:textAlignment="center"
 
                                         android:paddingBottom="5dp"
-                                        android:text="@string/total_confirmed"
+                                        android:text="@string/infected"
                                         app:tabTextColor="#78849e" />
                                 </LinearLayout>
 

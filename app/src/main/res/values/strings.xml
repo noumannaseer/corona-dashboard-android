@@ -101,5 +101,6 @@
     <string name="last_updated">Last updated</string>
     <string name="no_result_found">No result found</string>
     <string name="about_app">NoVoid is a Covid-19 tracking app, that keeps users up to date about the cases, recoveries and unfortunate deaths of patients around the world. The app is absolutely free and displays data for all the countries that are affected. It also provides guidelines and safety measures approved by WHO to help people take the right steps for dealing with Covid-19.</string>
+    <string name="infected">Infected</string>
 
 </resources>
