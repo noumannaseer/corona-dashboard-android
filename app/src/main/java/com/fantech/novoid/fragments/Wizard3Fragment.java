@@ -35,6 +35,13 @@ public class Wizard3Fragment
     private long mTime = 0;
 
 
+    //*************************************************************************
+    public Wizard3Fragment()
+    //*************************************************************************
+    {
+
+    }
+
     //***********************************************************************
     @Override
     public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)

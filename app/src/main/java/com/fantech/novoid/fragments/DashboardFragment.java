@@ -54,6 +54,14 @@ public class DashboardFragment
     private FragmentDashboardBinding mBinding;
     private CoronaStatsViewModel mCoronaStatsViewModel;
 
+
+    //*************************************************************************
+    public DashboardFragment()
+    //*************************************************************************
+    {
+
+    }
+
     //***********************************************************************
     public void onCreate(Bundle savedInstanceState)
     //***********************************************************************

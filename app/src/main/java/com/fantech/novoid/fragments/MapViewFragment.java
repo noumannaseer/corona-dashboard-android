@@ -58,6 +58,14 @@ public class MapViewFragment
     private ImageView mNoInternetImage;
 
 
+    //*************************************************************************
+    public MapViewFragment()
+    //*************************************************************************
+    {
+
+    }
+
+
     @SuppressLint("SetJavaScriptEnabled")
     //***********************************************************************
     @Override

@@ -58,14 +58,7 @@ public class CoronaStatsRepository
     {
 
         Log.d(LOG_REPO, "calling observer");
-        if(!AndroidUtil.isNetworkStatusAvailable())
-        {
-            AndroidUtil.toast(false,AndroidUtil.getString(R.string.no_internet));
-            if (mDbDataListener != null)
-                mDbDataListener.onDataInsertedInDB(false);
-            return;
 
-        }
 
         mCoronaDAO.getAllRecords()
            .observe(mLifeCycleOwner, coronas ->
@@ -98,6 +91,14 @@ public class CoronaStatsRepository
     //*********************************************************************
     {
         Log.d(LOG_REPO,"Stats loading");
+        if(!AndroidUtil.isNetworkStatusAvailable())
+        {
+            AndroidUtil.toast(false,AndroidUtil.getString(R.string.no_internet));
+            if (mDbDataListener != null)
+                mDbDataListener.onDataInsertedInDB(false);
+            return;
+
+        }
 
         mApiCount = 0;
         mCoronaList = new ArrayList<>();

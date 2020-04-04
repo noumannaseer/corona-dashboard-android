@@ -46,6 +46,14 @@ public class CountriesFragment
     private List<CoronaCountry> mFilteredList;
 
 
+    //*************************************************************************
+    public CountriesFragment()
+    //*************************************************************************
+    {
+
+    }
+
+
     //***********************************************************************
     @Override
     public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)

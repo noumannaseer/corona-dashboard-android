@@ -35,6 +35,14 @@ public class ProvisionalStatsFragment
         this.mCountryName = mCountryName;
     }
 
+    //*************************************************************************
+    public ProvisionalStatsFragment()
+    //*************************************************************************
+    {
+
+    }
+
+
     //***********************************************************************
     @Override
     public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
