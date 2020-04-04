@@ -43,6 +43,10 @@ public interface CoronaDAO
     @Query("SELECT sum(quantity) from corona where report_type=:type and date=(select date from corona order by date desc limit 1) and country=:country group by country")
     LiveData<Integer> getSum(int type, String country);
 
+    @Query("SELECT sum(quantity) from corona where report_type=:type and date=(select date from corona order by date desc limit 1) and country=:country group by country")
+    Integer getSumSynchronous(int type, String country);
+
+
     @Query("SELECT sum(quantity) from corona where report_type=:type and date=(select date from corona order by date desc limit 1) and country=:country and state=:state")
     LiveData<Integer> getSum(int type, String country, String state);
 

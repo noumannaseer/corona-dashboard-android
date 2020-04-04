@@ -590,6 +590,21 @@ public class UIUtils
                 .show();
     }
 
+    //******************************************************************
+    public static void displayAlertDialog(String message, String title, Context context, Drawable drawable)
+    //******************************************************************
+    {
+        val dialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setTitle(title)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, null)
+                .create();
+        dialog.setIcon(drawable);
+        dialog.show();
+    }
+
+
     //*********************************************************************
     public static void openLinkInBrowser(@Nullable String link)
     //*********************************************************************
@@ -1023,7 +1038,7 @@ public class UIUtils
                 }
             }
         }
-    return alert;
+        return alert;
     }
 
     //***************************************************

@@ -44,5 +44,6 @@
     <color name="graph_color">#03A9F4</color>
     <color name="grey_color">#e9e9e9</color>
     <color name="orange_color">#e25f32</color>
+    <color name="tab_text_color">#78849e</color>
 
 </resources>

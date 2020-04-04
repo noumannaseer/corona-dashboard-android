@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.fantech.novoid.R;
 import com.fantech.novoid.dao.CoronaDAO;
 import com.fantech.novoid.database.CoronaDatabase;
 import com.fantech.novoid.models.Corona;
@@ -41,19 +42,6 @@ public class CoronaStatsRepository
     private CoronaDAO mCoronaDAO;
     private static final String LOG_REPO="LOG_REPO";
 
-
-    /*//**************************************************
-    public static CoronaStatsRepository getInstance(LifecycleOwner lifeCycleOwner, Context application,DBDataListener dbDataListener)
-    //**************************************************
-    {
-        if (instance == null)
-        {
-            instance = new CoronaStatsRepository(lifeCycleOwner,application,dbDataListener);
-        }
-        return instance;
-
-    }
-*/
     //**************************************************
     public CoronaStatsRepository(LifecycleOwner lifeCycleOwner, Context application, DBDataListener dbDataListener)
     //**************************************************
@@ -70,32 +58,40 @@ public class CoronaStatsRepository
     {
 
         Log.d(LOG_REPO, "calling observer");
+        if(!AndroidUtil.isNetworkStatusAvailable())
+        {
+            AndroidUtil.toast(false,AndroidUtil.getString(R.string.no_internet));
+            if (mDbDataListener != null)
+                mDbDataListener.onDataInsertedInDB(false);
+            return;
+
+        }
 
         mCoronaDAO.getAllRecords()
-                       .observe(mLifeCycleOwner, coronas ->
-                       {
+           .observe(mLifeCycleOwner, coronas ->
+           {
 
-                           Log.d(LOG_REPO, "enter in observer");
-                           if (mIsObserved)
-                               return;
-                           Log.d(LOG_REPO,"calculating day");
-                           mIsObserved = true;
-                           val lastUpdated = SharedPreferencesUtils.getLong(
-                                   SharedPreferencesUtils.LAST_UPDATED_TIME);
-                           long diff = System.currentTimeMillis() - lastUpdated;
-                           int numOfDays = (int)(diff / (1000 * 60 * 60 * 24));
-                           if (coronas.size() == 0 || lastUpdated == 0 || numOfDays >= 1)
-                               loadStats();
-                           else
-                           {
-                               Log.d(LOG_REPO,"Opening home activity");
-                               mCoronaDAO.getAllRecords().removeObservers(mLifeCycleOwner);
+               Log.d(LOG_REPO, "enter in observer");
+               if (mIsObserved)
+                   return;
+               Log.d(LOG_REPO,"calculating day");
+               mIsObserved = true;
+               val lastUpdated = SharedPreferencesUtils.getLong(
+                       SharedPreferencesUtils.LAST_UPDATED_TIME);
+               long diff = System.currentTimeMillis() - lastUpdated;
+               int numOfDays = (int)(diff / (1000 * 60 * 60 * 24));
+               if (coronas.size() == 0 || lastUpdated == 0 || numOfDays >= 1)
+                   loadStats();
+               else
+               {
+                   Log.d(LOG_REPO,"Opening home activity");
+                   mCoronaDAO.getAllRecords().removeObservers(mLifeCycleOwner);
 
 
-                               if (mDbDataListener != null)
-                                   mDbDataListener.onDataInsertedInDB();
-                           }
-                       });
+                   if (mDbDataListener != null)
+                       mDbDataListener.onDataInsertedInDB(true);
+               }
+           });
     }
     //*********************************************************************
     private void loadStats()
@@ -170,7 +166,7 @@ public class CoronaStatsRepository
             Log.d(LOG_REPO,"data loaded opening home activity");
             mCoronaDAO.getAllRecords().removeObservers(mLifeCycleOwner);
             if(mDbDataListener!=null)
-                mDbDataListener.onDataInsertedInDB();
+                mDbDataListener.onDataInsertedInDB(true);
         }
     }
     //************************************************************
@@ -178,7 +174,7 @@ public class CoronaStatsRepository
     //************************************************************
     {
         //************************************************************
-        void onDataInsertedInDB();
+        void onDataInsertedInDB(boolean isSuccessfully);
         //************************************************************
     }
 

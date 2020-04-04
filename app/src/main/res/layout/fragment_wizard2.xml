@@ -14,8 +14,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
             android:lineSpacingExtra="3.5sp"
-            android:text="@string/select_location"
+            android:text="@string/your_location"
             android:textColor="?attr/green_color_background"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -27,56 +28,74 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/novoid_logo_transparent" />
+            android:visibility="gone" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginTop="20dp"
-            app:cardBackgroundColor="?attr/app_foreground"
-            app:cardCornerRadius="20dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_search_black_24dp"
-                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="?attr/grey_color_background"
-                    android:hint="@string/search_country"
-                    android:padding="10dp"
-                    android:singleLine="true"
-                    android:textColor="?attr/background_text_color"
-                    android:textColorHint="?attr/grey_color_background"
-                    android:textSize="16sp" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
 
         <ImageView
             android:id="@+id/country_flag"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14sp"
             android:lineSpacingExtra="5sp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            android:text="@string/do_you_want_get_daily_stats_notification_for_your_country"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/country_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:lineSpacingExtra="3.5sp"
+            android:text="@string/your_location"
+            android:textColor="?attr/green_color_background"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:id="@+id/cancel"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/orange_color"
+                android:text="@string/no"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                android:theme="@style/MatButton"
+                app:backgroundTint="@color/orange_color"
+                app:cornerRadius="20dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:id="@+id/next"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:background="@color/orange_color"
+                android:text="@string/yes"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                android:theme="@style/MatButton"
+                app:backgroundTint="@color/orange_color"
+                app:cornerRadius="20dp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

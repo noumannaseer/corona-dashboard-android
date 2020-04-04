@@ -136,10 +136,6 @@ public class MapViewFragment
         mWebView.getSettings()
                 .setMinimumLogicalFontSize(1);
         mWebView.getSettings()
-                .setJavaScriptEnabled(true);
-        mWebView.getSettings()
-                .setJavaScriptEnabled(true);
-        mWebView.getSettings()
                 .setUseWideViewPort(true);
 
     }

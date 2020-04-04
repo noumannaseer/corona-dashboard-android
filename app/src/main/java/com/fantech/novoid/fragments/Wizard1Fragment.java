@@ -9,25 +9,48 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fantech.novoid.R;
+import com.fantech.novoid.activities.WizardActivity;
+import com.fantech.novoid.databinding.FragmentWizard1Binding;
+import com.fantech.novoid.databinding.FragmentWizard2Binding;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+//***********************************************************************
 public class Wizard1Fragment
-        extends Fragment
+        extends BaseFragment
+//***********************************************************************
 {
 
-    public Wizard1Fragment()
-    {
-        // Required empty public constructor
-    }
+    private View rootView;
+    private FragmentWizard1Binding mBinding;
 
 
+    //***********************************************************************
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateViewBaseFragment(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    //***********************************************************************
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wizard1, container, false);
+        if (rootView == null)
+        {
+            mBinding = FragmentWizard1Binding.inflate(inflater, parent, false);
+            rootView = mBinding.getRoot();
+            initControls();
+
+        }
+        return rootView;
     }
+
+    //***********************************************************************
+    private void initControls()
+    //***********************************************************************
+    {
+        mBinding.next.setOnClickListener(view -> proceedNext());
+    }
+
+    //***********************************************************************
+    private void proceedNext()
+    //***********************************************************************
+
+    {
+        ((WizardActivity)getActivity()).Next();
+    }
+
 }

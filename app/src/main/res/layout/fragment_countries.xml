@@ -71,6 +71,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
+                <TextView
+                    android:id="@+id/no_result_found"
+                    android:textColor="?attr/background_text_color"
+                    android:textAlignment="center"
+                    android:text="@string/no_result_found"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
 

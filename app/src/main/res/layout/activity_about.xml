@@ -68,11 +68,17 @@
                     android:layout_marginTop="17dp"
                     android:background="@color/grey_color" />
 
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/fantech_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
                 <com.fantech.novoid.widget.TitleDescriptionCustomView
                     android:layout_width="match_parent"
+                    android:layout_marginTop="-50dp"
                     android:layout_height="wrap_content"
                     app:description="@string/fantech_labs_description"
-                    app:title="@string/fantech_labs" />
+                    app:title="" />
 
 
             </LinearLayout>

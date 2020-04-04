@@ -82,12 +82,24 @@
     <string name="fantech_labs">Fantech Labs</string>
     <string name="fantech_labs_description"><![CDATA[Fantech Labs is an information technology & consulting company that provides highly innovative and flexible solutions to address digital needs of businesses. We are a team of individuals that value learning, creativity, and agility at work. Technology is our passion; we use it as a means to help business and communities grow. With the aim of serving communities and helping them in these testing times, Fantech has decided to play its part. NoVoid is our way of showing care, love and support to people around the world affected from Covid-19. NoVoid is a Covid-19 tracking app, that keeps users up to date about the cases, recoveries and unfortunate deaths of patients around the world. The app is absolutely free and displays data for all the countries that are affected. It also provides guidelines and safety measures approved by WHO to help people take the right steps for dealing with Covid-19.]]></string>
     <string name="about_ap">About app</string>
-    <string name="select_location">Select location</string>
+    <string name="your_location">Your location</string>
     <string name="set_notifications">Set Notifications</string>
     <string name="select_notification_time">Select Notification Time</string>
     <string name="all_set">All set</string>
     <string name="hurrah">Hurrah!</string>
     <string name="notification_set_successfully">Notification set successfully</string>
     <string name="get_started">Get started</string>
+    <string name="please_select_you_country_we_will_send_you_daily_notification_with_covid_19_stats">we will send you daily notification with Covid-19 stats.Please click on Next to proceed</string>
+    <string name="next">Next</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="select_time">Select time</string>
+    <string name="time_template">HH:MM AM</string>
+    <string name="do_you_want_get_daily_stats_notification_for_your_country">Do you want get daily stats notification for your country</string>
+    <string name="please_select_notification_time">Please select notification time</string>
+    <string name="notification_time">Notification time</string>
+    <string name="last_updated">Last updated</string>
+    <string name="no_result_found">No result found</string>
+    <string name="about_app">NoVoid is a Covid-19 tracking app, that keeps users up to date about the cases, recoveries and unfortunate deaths of patients around the world. The app is absolutely free and displays data for all the countries that are affected. It also provides guidelines and safety measures approved by WHO to help people take the right steps for dealing with Covid-19.</string>
 
 </resources>

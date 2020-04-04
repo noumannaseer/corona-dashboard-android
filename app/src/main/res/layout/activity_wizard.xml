@@ -14,17 +14,5 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="10dp" />
 
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/circle_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:fillColor="@color/orange_color"
-            app:layout_constraintBottom_toBottomOf="@+id/view_pager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:pageColor="@android:color/transparent"
-            app:radius="5dp"
-            app:strokeColor="@color/orange_color" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

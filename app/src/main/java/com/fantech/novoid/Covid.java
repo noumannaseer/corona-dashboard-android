@@ -24,8 +24,7 @@ public class Covid
         super.onCreate();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         AndroidUtil.setContext(getApplicationContext());
-     //   Fabric.with(this, new Crashlytics());
-
+        Fabric.with(this, new Crashlytics());
     }
 
 
@@ -35,7 +34,6 @@ public class Covid
     //*********************************************************************
     {
         return (Covid)AndroidUtil.getApplicationContext();
-
     }
 
 }

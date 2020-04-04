@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +23,6 @@ import com.fantech.novoid.databinding.ActivityCountryStatsBinding;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.Constants;
 import com.fantech.novoid.utils.ThemeUtils;
-import com.fantech.novoid.utils.UIUtils;
 import com.fantech.novoid.view_models.CoronaStatsViewModel;
 import com.google.android.material.tabs.TabLayout;
 
@@ -38,7 +36,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import lombok.val;
 
 //*******************************************************
 public class CountryStatsActivity
@@ -185,8 +182,7 @@ public class CountryStatsActivity
 
         {
             ActivityCompat.requestPermissions(this,
-                                              new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                              },
+                                              new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
                                               1);
             return false;
         }
@@ -252,7 +248,6 @@ public class CountryStatsActivity
 
         menu.findItem(R.id.action_share)
             .setIcon(drawable);
-
         return true;
     }
 }
