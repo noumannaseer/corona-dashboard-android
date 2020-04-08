@@ -5,6 +5,7 @@ import android.telephony.TelephonyManager;
 
 import com.fantech.novoid.R;
 import com.fantech.novoid.utils.AndroidUtil;
+import com.fantech.novoid.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class CountryReader
         catch (Exception e)
         {
         }
-        return null;
+        return Constants.US;
     }
 
     //********************************************************************

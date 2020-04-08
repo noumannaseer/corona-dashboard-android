@@ -79,6 +79,7 @@ public class Wizard2Fragment
     private void setCountryFlag(String countryName)
     //***********************************************************************
     {
+
         final int flag = World.getFlagOf(countryName);
         mBinding.countryFlag.setImageResource(flag);
     }
