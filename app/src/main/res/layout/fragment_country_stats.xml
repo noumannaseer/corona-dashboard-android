@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?app_background"
+        android:fillViewport="true"
         android:orientation="vertical"
         android:padding="10dp"
         tools:context=".fragments.CountryStatsFragment">
@@ -15,18 +16,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <lecho.lib.hellocharts.view.PieChartView
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp" />
-
-
+                <ImageView
+                    android:id="@+id/flag"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
@@ -38,30 +41,30 @@
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <View
-                            android:background="@color/graph_color"
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"/>
-                    <TextView
-                        android:layout_marginStart="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/total_confirmed"
-                        android:textAlignment="center"
-                        android:textColor="?attr/grey_color_background" />
-                    </LinearLayout>
+                        android:layout_gravity="center_horizontal">
 
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/graph_color" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/total_confirmed"
+                            android:textAlignment="center"
+                            android:textColor="?attr/grey_color_background" />
+                    </LinearLayout>
 
 
                     <TextView
@@ -74,24 +77,23 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
 
                         <View
-                            android:background="@color/red_color_background1"
                             android:layout_width="20dp"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:background="@color/red_color_background1" />
+
                         <TextView
-                            android:layout_marginStart="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
                             android:text="@string/total_death"
                             android:textAlignment="center"
                             android:textColor="?attr/grey_color_background" />
                     </LinearLayout>
-
-
 
 
                     <TextView
@@ -105,25 +107,23 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
 
                         <View
-                            android:background="@color/yellow_color_background1"
                             android:layout_width="20dp"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:background="@color/yellow_color_background1" />
+
                         <TextView
-                            android:layout_marginStart="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
                             android:text="@string/total_recorved"
                             android:textAlignment="center"
                             android:textColor="?attr/grey_color_background" />
                     </LinearLayout>
-
-
-
 
 
                     <TextView

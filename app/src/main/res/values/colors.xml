@@ -18,23 +18,6 @@
     <color name="setting_text_color1">#FFFFFF</color>
 
 
-    <!--Dark theme-->
-    <color name="app_background2">#202124</color>
-    <color name="app_foreground2">#3C4043</color>
-    <color name="background_text_color2">#FFFFFF</color>
-    <color name="foreground_text_color2">#9CA2A8</color>
-    <color name="green_color_background2">#00C6EB</color>
-    <color name="blue_color_background2">#0CA6DC</color>
-    <color name="purple_color_background2">#535EB3</color>
-    <color name="yellow_color_background2">#BBCD4E</color>
-    <color name="pink_color_background2">#C0296E</color>
-    <color name="red_color_background2">#CF5B3F</color>
-    <color name="brown_color_background2">#8E695B</color>
-    <color name="grey_color_background2">#7E8689</color>
-    <color name="transparent_red">#50EE0000</color>
-    <color name="setting_text_color2">#3C4043</color>
-
-
     <color name="no_infections">#F2F2F2</color>
     <color name="level_1">#A9E3F9</color>
     <color name="level_2">#53BDF1</color>

@@ -1,5 +1,6 @@
 package com.fantech.novoid.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,11 +13,10 @@ import com.fantech.novoid.databinding.ActivityHomeBinding;
 import com.fantech.novoid.fragments.CountriesFragment;
 import com.fantech.novoid.fragments.DashboardFragment;
 import com.fantech.novoid.fragments.GuideLinesFragment;
-import com.fantech.novoid.fragments.MapViewFragment;
 import com.fantech.novoid.fragments.SettingsFragment;
 import com.fantech.novoid.utils.AndroidUtil;
 import com.fantech.novoid.utils.ThemeUtils;
-import com.fantech.novoid.view_models.CoronaStatsViewModel;
+import com.fantech.novoid.utils.UIUtils;
 
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -32,7 +32,6 @@ public class HomeActivity
     private ActivityHomeBinding mBinding;
     private DashboardFragment mDashboardFragment;
     private CountriesFragment mCountriesFragment;
-    private MapViewFragment mMapViewFragment;
     private GuideLinesFragment mGuideLinesFragment;
     private SettingsFragment mSettingsFragment;
     private boolean mIsDarkTheme;
@@ -68,46 +67,38 @@ public class HomeActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mDashboardFragment = new DashboardFragment();
         mCountriesFragment = new CountriesFragment();
-        mMapViewFragment = new MapViewFragment();
         mGuideLinesFragment = new GuideLinesFragment();
         mSettingsFragment = new SettingsFragment();
         mBinding.bottomNavigation.setOnNavigationItemSelectedListener(item ->
-          {
-              switch (item.getItemId())
-              {
-              case R.id.dashboard:
-                  mBinding.fragmentName.setText(
-                          AndroidUtil.getString(
-                                  R.string.dashboard));
-                  loadFragment(
-                          mDashboardFragment);
-                  break;
-              case R.id.countries:
-                  mBinding.fragmentName.setText(
-                          AndroidUtil.getString(
-                                  R.string.countries));
-                  loadFragment(
-                          mCountriesFragment);
-                  break;
-              case R.id.map_view:
-                  mBinding.fragmentName.setText(
-                          AndroidUtil.getString(
-                                  R.string.covid_global_view));
-                  loadFragment(
-                          new MapViewFragment());
-                  break;
-              case R.id.stay_safe:
-                  mBinding.fragmentName.setText(
-                          AndroidUtil.getString(
-                                  R.string.guide_lines));
-                  loadFragment(
-                          mGuideLinesFragment);
-                  break;
-              default:
-                  break;
-              }
-              return true;
-          });
+                                                                      {
+                                                                          switch (item.getItemId())
+                                                                          {
+                                                                          case R.id.dashboard:
+                                                                              mBinding.fragmentName.setText(
+                                                                                      AndroidUtil.getString(
+                                                                                              R.string.dashboard));
+                                                                              loadFragment(
+                                                                                      mDashboardFragment);
+                                                                              break;
+                                                                          case R.id.countries:
+                                                                              mBinding.fragmentName.setText(
+                                                                                      AndroidUtil.getString(
+                                                                                              R.string.countries));
+                                                                              loadFragment(
+                                                                                      mCountriesFragment);
+                                                                              break;
+                                                                          case R.id.stay_safe:
+                                                                              mBinding.fragmentName.setText(
+                                                                                      AndroidUtil.getString(
+                                                                                              R.string.guide_lines));
+                                                                              loadFragment(
+                                                                                      mGuideLinesFragment);
+                                                                              break;
+                                                                          default:
+                                                                              break;
+                                                                          }
+                                                                          return true;
+                                                                      });
         loadFragment(mDashboardFragment);
 
     }
@@ -150,17 +141,30 @@ public class HomeActivity
         switch (item.getItemId())
         {
         case R.id.action_settings:
-            gotoSettingActivity();
+            killApp();
             break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //******************************************************************
-    private void gotoSettingActivity()
-    //******************************************************************
+    private void killApp()
     {
-        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(settingsIntent);
+        UIUtils.displayAlertDialog(AndroidUtil.getString(R.string.do_you_really_clode),
+                                   AndroidUtil.getString(R.string.close_app), this,
+                                   AndroidUtil.getString(R.string.yes),
+                                   AndroidUtil.getString(R.string.no)
+                , new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        if (which == -1)
+                        {
+                            finish();
+                            System.exit(0);
+                        }
+                    }
+                });
     }
+
 }

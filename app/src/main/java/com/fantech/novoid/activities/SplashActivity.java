@@ -15,7 +15,7 @@ import lombok.val;
 
 //*********************************************************************
 public class SplashActivity
-		extends BaseActivity
+        extends BaseActivity
 //*********************************************************************
 {
     private ActivitySplashBinding mBinding;
@@ -32,20 +32,8 @@ public class SplashActivity
 
             val updatedTime = SharedPreferencesUtils.getLong(
                     SharedPreferencesUtils.LAST_UPDATED_TIME);
-            if (updatedTime == 0)
-                gotoWizardActivity();
-            else
-                gotoHomeActivity();
+            gotoHomeActivity();
         }, 1000);
-    }
-
-    //*********************************************************************
-    private void gotoWizardActivity()
-    //*********************************************************************
-    {
-        Intent homeIntent = new Intent(this, WizardActivity.class);
-        startActivity(homeIntent);
-        finish();
     }
 
 
@@ -58,6 +46,5 @@ public class SplashActivity
         startActivity(homeIntent);
         finish();
     }
-
 
 }

@@ -72,6 +72,7 @@ public class CountryStatsActivity
         World.init(this);
         final int flag = World.getFlagOf(mCountryName.toLowerCase());
         mBinding.flag.setImageResource(flag);
+
         mBinding.countryName.setText(mCountryName);
     }
 

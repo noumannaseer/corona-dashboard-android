@@ -10,10 +10,6 @@
         android:icon="@drawable/countries"
         android:title="@string/countries" />
 
-    <item
-        android:id="@+id/map_view"
-        android:icon="@drawable/map_view"
-        android:title="@string/map_view" />
 
     <item
         android:id="@+id/stay_safe"

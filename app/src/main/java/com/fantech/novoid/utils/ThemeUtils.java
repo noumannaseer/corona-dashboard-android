@@ -3,7 +3,6 @@ package com.fantech.novoid.utils;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-
 import com.fantech.novoid.R;
 import com.fantech.novoid.activities.BaseActivity;
 
@@ -22,18 +21,10 @@ public class ThemeUtils
     public static void applyTheme(Activity activity)
     //****************************************************************
     {
-        if (!getCurrentThemeIsDark())
-        {
-            activity.getApplicationContext()
-                    .setTheme(R.style.AppTheme);
-            activity.setTheme(R.style.AppTheme);
-        }
-        else
-        {
-            activity.getApplicationContext()
-                    .setTheme(R.style.darktheme);
-            activity.setTheme(R.style.darktheme);
-        }
+        activity.getApplicationContext()
+                .setTheme(R.style.AppTheme);
+        activity.setTheme(R.style.AppTheme);
+
     }
 
     //****************************************************************

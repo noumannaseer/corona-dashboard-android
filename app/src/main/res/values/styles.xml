@@ -18,7 +18,7 @@
         <item name="red_color_background">@color/red_color_background1</item>
         <item name="brown_color_background">@color/brown_color_background1</item>
         <item name="grey_color_background">@color/grey_color_background1</item>
-        <item name="settings_color_background">@color/setting_text_color2</item>
+        <item name="settings_color_background">@color/setting_text_color1</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="toolbarStyle">@style/toolbarStyleF</item>
         <item name="windowNoTitle">true</item>
@@ -66,34 +66,5 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="darktheme" parent="Theme.AppCompat.DayNight">
-
-        <item name="colorPrimary">@color/app_background2</item>
-        <item name="colorPrimaryDark">@color/app_background2</item>
-        <item name="colorAccent">@color/purple_color_background2</item>
-
-        <!-- themes attr-->
-        <item name="app_background">@color/app_background2</item>
-        <item name="app_foreground">@color/app_foreground2</item>
-        <item name="background_text_color">@color/background_text_color2</item>
-        <item name="green_color_background">@color/green_color_background2</item>
-        <item name="blue_color_background">@color/blue_color_background1</item>
-        <item name="purple_color_background">@color/purple_color_background2</item>
-        <item name="yellow_color_background">@color/yellow_color_background2</item>
-        <item name="pink_color_background">@color/pink_color_background2</item>
-        <item name="red_color_background">@color/red_color_background2</item>
-        <item name="brown_color_background">@color/brown_color_background2</item>
-        <item name="grey_color_background">@color/grey_color_background2</item>
-        <item name="settings_color_background">@color/setting_text_color1</item>
-
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="toolbarStyle">@style/toolbarStyleF</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:fontFamily">@font/font</item>
-
-
-    </style>
 
 </resources>
